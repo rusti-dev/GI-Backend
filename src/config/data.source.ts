@@ -13,17 +13,7 @@ export const DataSourceConfig: DataSourceOptions = {
   password: configService.get('DB_PASSWORD'),
   database: configService.get('DB_DATABASE'),
   entities: [__dirname + '/../**/**/*.entity{.ts,.js}'],
-  // migrations: [__dirname + '/../migrations/*{.ts,.js}'],
-  // synchronize: configService.get('APP_PROD') === 'true' ? true : false,
   synchronize: true,
-  // logging: false,
-  // extra: {
-  //   ssl:
-  //     configService.get('APP_PROD') === 'true'
-  //       ? { rejectUnauthorized: false }
-  //       : null,
-  //   timezone: 'America/La_Paz',
-  // },
   namingStrategy: new SnakeNamingStrategy(),
 };
 
