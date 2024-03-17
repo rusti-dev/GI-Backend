@@ -2,11 +2,10 @@ import { Module } from '@nestjs/common';
 
 import { SeedController } from './seed.controller';
 import { SeedService } from './seed.service';
-import { UsersModule } from '../modules/users/users.module';
-import { TiendaModule } from 'src/modules/tienda/tienda.module';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
-  imports: [UsersModule, TiendaModule],
+  imports: [UsersModule],
   controllers: [SeedController],
   providers: [SeedService],
 })
