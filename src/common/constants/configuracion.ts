@@ -1,10 +1,10 @@
-export enum NOTIFICACIONES {
+export enum NOTIFICACTIONS {
     FAVORITOS = 'favoritos',
     OFERTAS = 'ofertas',
     SUSCRIPCIONES = 'suscripciones',
 }
 
-export enum GENEROS {
+export enum GENDERS {
     MASCULINO = 'masculino',
     FEMENINO = 'femenino',
 }

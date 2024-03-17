@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 
-import { AuthTokenResult } from 'src/modules/auth/interfaces/auth.interface';
-import { IUserToken } from 'src/modules/auth/interfaces/userToken.interface';
+import { AuthTokenResult } from 'src/auth/interfaces/auth.interface';
+import { IUserToken } from 'src/auth/interfaces/userToken.interface';
 
 
 export const userToken = (token: string): IUserToken | string => {

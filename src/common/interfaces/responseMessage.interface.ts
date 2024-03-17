@@ -3,4 +3,5 @@ export interface ResponseMessage {
   message?: string | string[];
   error?: string;
   data?: any;
+  countData?: number;
 }
