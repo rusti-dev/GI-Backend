@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto, UpdateUserDto } from '../dto';
 import { UsersEntity } from '../entities/users.entity';
 import { QueryDto } from 'src/common/dto/query.dto';
-import { handlerError } from 'src/common/utils/handlerError.utils';
+import { handlerError } from 'src/common/utils';
 import { ResponseMessage } from 'src/common/interfaces/responseMessage.interface';
 
 @Injectable()

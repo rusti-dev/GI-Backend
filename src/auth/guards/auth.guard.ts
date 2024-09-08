@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 
 import { UserService } from '../../users/services/users.service';
-import { userToken } from 'src/common/utils/user.token';
+import { userToken } from 'src/common/utils';
 import { IUserToken } from '../interfaces/userToken.interface';
 
 @Injectable()

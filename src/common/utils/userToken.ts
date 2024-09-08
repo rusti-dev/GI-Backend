@@ -16,6 +16,6 @@ export const userToken = (token: string): IUserToken | string => {
       isExpired,
     };
   } catch (error) {
-    return 'Token no valido.';
+    return 'El token no es valido.';
   }
 };

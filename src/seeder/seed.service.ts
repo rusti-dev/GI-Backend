@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 
-import { handlerError } from '../common/utils/handlerError.utils';
+import { handlerError } from '../common/utils';
 import { ROLES } from 'src/common/constants';
 import { GENDERS } from 'src/common/constants/configuracion';
 import { UserService } from 'src/users/services/users.service';

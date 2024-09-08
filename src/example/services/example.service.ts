@@ -6,7 +6,7 @@ import { CreateExampleDto } from '../dto/create-example.dto';
 import { UpdateExampleDto } from '../dto/update-example.dto';
 import { ExampleEntity } from '../entities/example.entity';
 import { QueryDto } from 'src/common/dto/query.dto';
-import { handlerError } from 'src/common/utils/handlerError.utils';
+import { handlerError } from 'src/common/utils';
 import { ResponseMessage } from 'src/common/interfaces/responseMessage.interface';
 
 @Injectable()

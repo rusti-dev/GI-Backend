@@ -5,9 +5,9 @@ export const responseHandler = (responseOptions: ResponseMessage): ResponseMessa
   const response: ResponseMessage = {
     statusCode,
     data,
+    countData,
     message,
     error,
-    countData
   };
   return response;
 };

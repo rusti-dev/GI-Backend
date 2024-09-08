@@ -2,8 +2,10 @@
 /dist
 /node_modules
 /build
-
+postgres
 # Logs
+
+binnacle
 logs
 *.log
 npm-debug.log*
@@ -11,9 +13,6 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-package-lock.json
-yarn.lock
-
 # OS
 .DS_Store
 

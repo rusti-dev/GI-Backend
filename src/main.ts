@@ -11,17 +11,17 @@ import { CORS_OPTIONS } from './common/constants';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(morgan('dev')); // Log all requests to the console
-  app.setGlobalPrefix('api'); // Set the global prefix for all routes
-  app.enableCors(CORS_OPTIONS); // Enable CORS
+  app.use(morgan('dev'));
+  app.setGlobalPrefix('api');
+  app.enableCors(CORS_OPTIONS);
   app.useGlobalPipes(
     new ValidationPipe({
       transformOptions: {
         enableImplicitConversion: true,
       },
     }),
-  ); // Enable validation
-
+  );
+  // useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const reflector = app.get('Reflector');
   app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector)); // Enable transformation
 
@@ -34,7 +34,7 @@ async function bootstrap() {
     const config = new DocumentBuilder()
       .addBearerAuth()
       .setTitle(title)
-      .setDescription('API Documentation for the application')
+      .setDescription('API Documentation for the application (edit)')
       .setVersion('1.0')
       .build();
     const document = SwaggerModule.createDocument(app, config);
