@@ -13,17 +13,14 @@ import {
 import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import { ExampleService } from '../services/example.service';
-import { AuthGuard, RolesGuard } from 'src/auth/guards';
 import { CreateExampleDto } from '../dto/create-example.dto';
 import { QueryDto } from 'src/common/dto/query.dto';
 import { UpdateExampleDto } from '../dto/update-example.dto';
-import { RolesAccess } from 'src/auth/decorators';
 import { ORDER_ENUM } from 'src/common/constants';
 import { ResponseMessage } from 'src/common/interfaces/responseMessage.interface';
 
 @ApiTags('Example')
 @ApiBearerAuth()
-@UseGuards(AuthGuard, RolesGuard)
 @Controller('example')
 export class ExampleController {
   constructor(private readonly exampleService: ExampleService) { }
@@ -58,7 +55,6 @@ export class ExampleController {
     return this.exampleService.update(id, updateExampleDto);
   }
 
-  @RolesAccess('ADMIN')
   @ApiParam({ name: 'id', type: 'string' })
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string): Promise<ResponseMessage> {

@@ -30,7 +30,7 @@ async function bootstrap() {
   const title: string = configService.get('APP_NAME');
   const url = configService.get('APP_URL');
 
-  if (configService.get('APP_PROD') === 'false') {
+  // if (configService.get('APP_PROD') === 'false') {
     const config = new DocumentBuilder()
       .addBearerAuth()
       .setTitle(title)
@@ -39,7 +39,7 @@ async function bootstrap() {
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);
-  }
+  // }
 
   await app.listen(port);
   console.log(`Application is running on: ${url}`);
