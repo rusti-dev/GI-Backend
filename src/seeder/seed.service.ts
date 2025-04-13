@@ -76,7 +76,7 @@ export class SeedService {
         ];
         
         this.administradorSU = await this.roleService.create({
-            name: ROLE.ADMIN,            
+            name: ROLE.ADMIN_SU,            
             permissions: permissionTI,
         });        
     }
@@ -85,7 +85,7 @@ export class SeedService {
         try {
             const userSU: CreateUserDto = {
                 name: 'Administrador SU',
-                email: 'adminTI@gmail.com',
+                email: 'adminSU@gmail.com',
                 password: '12345678',
                 role: this.administradorSU.id,
                 ci: 12345678,
