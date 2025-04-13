@@ -50,8 +50,7 @@ export class UserService {
       const query = this.userRepository.createQueryBuilder('user');
       query.leftJoinAndSelect('user.role', 'role');
       query.leftJoinAndSelect('role.permissions', 'permissions');
-      query.leftJoinAndSelect('permissions.permission', 'permission');
-      query.leftJoinAndSelect('user.branch', 'branch');
+      query.leftJoinAndSelect('permissions.permission', 'permission');      
       query.andWhere('role.name != :role', { role: ROLE.ADMIN_SU });
       if (limit) query.take(limit);
       if (offset) query.skip(offset);
@@ -75,8 +74,7 @@ export class UserService {
         relations: [
           'role',
           'role.permissions',
-          'role.permissions.permission',
-          'branch',
+          'role.permissions.permission',          
         ],
       });
       if (!user) throw new NotFoundException('Usuario no encontrado.');
@@ -99,8 +97,7 @@ export class UserService {
         relations: [
           'role',
           'role.permissions',
-          'role.permissions.permission',
-          'branch',
+          'role.permissions.permission',          
         ],
       });
       if (!user) throw new NotFoundException('Usuario no encontrado.');
@@ -117,8 +114,7 @@ export class UserService {
         relations: [
           'role',
           'role.permissions',
-          'role.permissions.permission',
-          'branch',
+          'role.permissions.permission',          
         ],
       });
       if (!user) throw new UnauthorizedException('User not found.');
