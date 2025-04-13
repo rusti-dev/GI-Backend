@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ResponseMessage } from "../../common/interfaces/responseMessage.interface";
+import { ResponseMessage } from "../interfaces/response-message.interface";
 
 export abstract class BaseType implements ResponseMessage {
 

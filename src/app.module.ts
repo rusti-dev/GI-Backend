@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSourceConfig } from './config/data.source';
 import { ProvidersModule } from './providers/providers.module';
 import { CommonModule } from './common/common.module';
+import { SeederModule } from './seeder/seed.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { CommonModule } from './common/common.module';
     ProvidersModule,
     CommonModule,      
     
+    UsersModule,
+    SeederModule,
   ]
 })
 export class AppModule { }
