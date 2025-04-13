@@ -46,14 +46,6 @@ export class CreateUserDto {
   phone?: string
 
   @ApiProperty({
-    example: 'Calle 123',
-    type: String,
-    description: 'Dirección del usuario',
-  })
-  @IsOptional() @IsString() @MaxLength(100)
-  address?: string;
-
-  @ApiProperty({
     example: 'masculino',
     type: String,
     description: 'Género del usuario (masculino, femenino o otro)',
@@ -68,14 +60,4 @@ export class CreateUserDto {
   })
   @IsNotEmpty() @IsString() @IsUUID()
   role: string;
-
-  @ApiProperty({
-    example: 'ID',
-    type: String,
-    description: 'Id de la sucursal del usuario',
-    nullable: true,
-    required: false,
-  })
-  @IsOptional() @IsString() @IsUUID()
-  branch?: string;
 }
