@@ -66,18 +66,31 @@ export class SeedService {
             type: PermissionType.USERS,
         });
 
-        const permissionTI = [
+        const sectors = await this.permissionService.create({
+            name: PERMISSION.SECTOR,
+            description: 'permite gestionar sectores',
+            type: PermissionType.USERS,
+        });
+        const sectorsShow = await this.permissionService.create({
+            name: PERMISSION.SECTOR_SHOW,
+            description: 'permite ver sectores',
+            type: PermissionType.USERS,
+        });
+
+        const permissionSU = [
             users.id,
             usersShow.id,
             roles.id,
             rolesShow.id,
             permissions.id,
             permissionsShow.id,
+            sectors.id,
+            sectorsShow.id,
         ];
         
         this.administradorSU = await this.roleService.create({
             name: ROLE.ADMIN,            
-            permissions: permissionTI,
+            permissions: permissionSU,
         });        
     }
 

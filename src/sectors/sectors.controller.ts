@@ -20,7 +20,7 @@ import { ORDER_ENUM } from 'src/common/constants';
 export class SectorsController {
     constructor(private readonly sectorsService: SectorsService) {}
   
-    @PermissionAccess(PERMISSION.USER)
+    @PermissionAccess(PERMISSION.SECTOR)
     @Post()
     public async create( @Body() createSectorDto: CreateSectorDto ): Promise<ResponseMessage> {
         return {
@@ -29,7 +29,7 @@ export class SectorsController {
         };
     }
   
-    @PermissionAccess(PERMISSION.USER, PERMISSION.USER_SHOW)
+    @PermissionAccess(PERMISSION.SECTOR, PERMISSION.SECTOR_SHOW)
     @ApiQuery({ name: 'limit', type: 'number', required: false })
     @ApiQuery({ name: 'offset', type: 'number', required: false })
     @ApiQuery({ name: 'order', enum: ORDER_ENUM, required: false })
@@ -45,7 +45,7 @@ export class SectorsController {
         };
     }
   
-    @PermissionAccess(PERMISSION.USER, PERMISSION.USER_SHOW)
+    @PermissionAccess(PERMISSION.SECTOR, PERMISSION.SECTOR_SHOW)
     @ApiParam({ name: 'sectorId', type: 'string' })
     @Get(':sectorId')
     public async findOne( @Param('sectorId', ParseUUIDPipe) sectorId: string ): Promise<ResponseMessage> {
@@ -55,7 +55,7 @@ export class SectorsController {
         };
     }
   
-    @PermissionAccess(PERMISSION.USER)
+    @PermissionAccess(PERMISSION.SECTOR)
     @ApiParam({ name: 'sectorId', type: 'string' })
     @Patch(':sectorId')
     public async update(
@@ -68,7 +68,7 @@ export class SectorsController {
         };
     }
   
-    @PermissionAccess(PERMISSION.USER)
+    @PermissionAccess(PERMISSION.SECTOR)
     @ApiParam({ name: 'sectorId', type: 'string' })
     @Delete(':sectorId')
     public async remove( @Param('sectorId', ParseUUIDPipe) sectorId: string ): Promise<ResponseMessage> {
