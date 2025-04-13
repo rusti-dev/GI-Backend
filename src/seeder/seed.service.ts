@@ -19,8 +19,8 @@ export class SeedService {
     constructor(
         private readonly userService: UserService,
         private readonly roleService: RoleService,
-        private readonly permissionService: PermissionService,        
-    ) {}
+        private readonly permissionService: PermissionService,
+    ) { }
 
     public async runSeeders() {
         try {
@@ -32,7 +32,7 @@ export class SeedService {
             throw new Error('Error al ejecutar seeders');
         }
     }
-    
+
     private async createPermissionsAndRoles() {
         // user
         const users = await this.permissionService.create({
@@ -66,6 +66,17 @@ export class SeedService {
             type: PermissionType.USERS,
         });
 
+        const sectors = await this.permissionService.create({
+            name: PERMISSION.SECTOR,
+            description: 'permite gestionar sectores',
+            type: PermissionType.USERS,
+        });
+        const sectorsShow = await this.permissionService.create({
+            name: PERMISSION.SECTOR_SHOW,
+            description: 'permite ver sectores',
+            type: PermissionType.USERS,
+        });
+
         const permissionTI = [
             users.id,
             usersShow.id,
@@ -73,12 +84,14 @@ export class SeedService {
             rolesShow.id,
             permissions.id,
             permissionsShow.id,
+            sectors.id,
+            sectorsShow.id,
         ];
-        
+
         this.administradorSU = await this.roleService.create({
-            name: ROLE.ADMIN_SU,            
+            name: ROLE.ADMIN_SU,
             permissions: permissionTI,
-        });        
+        });
     }
 
     private async createUsersAndAssignRoles() {
@@ -89,7 +102,7 @@ export class SeedService {
                 password: '12345678',
                 role: this.administradorSU.id,
                 ci: 12345678,
-                phone: '12345678',  
+                phone: '12345678',
                 gender: GENDER.FEMALE,
             };
 

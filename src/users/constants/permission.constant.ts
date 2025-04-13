@@ -9,6 +9,10 @@ export enum PERMISSION {
   PERMISSION = 'Permiso',
   PERMISSION_SHOW = 'Mostrar permisos',
 
+  // real state 
+  SECTOR = 'Sector',
+  SECTOR_SHOW = 'Mostrar sectores',
+
   // realstate
   REALSTATE = 'Inmobiliaria',
   REALSTATE_SHOW = 'Mostrar inmobiliarias',
