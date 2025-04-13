@@ -18,31 +18,31 @@ import { AuthService } from './services/auth.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      RoleEntity,
       PermissionEntity,
       PermissionRoleEntity,
+      RoleEntity,
       UserEntity,
     ]),
     ConfigModule,
   ],
   controllers: [
     AuthController,
-    RoleController,
     PermissionController,
+    RoleController,
     UsersController,
   ],
   providers: [
     AuthService,
-    RoleService,
     PermissionService,
     PermissionRoleService,
+    RoleService,
     UserService,
   ],
   exports: [
     AuthService,
-    RoleService,
     PermissionService,
     PermissionRoleService,
+    RoleService,
     UserService,
     TypeOrmModule,
   ],
