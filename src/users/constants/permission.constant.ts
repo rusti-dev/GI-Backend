@@ -8,4 +8,8 @@ export enum PERMISSION {
   ROLE_SHOW = 'Mostrar roles',
   PERMISSION = 'Permiso',
   PERMISSION_SHOW = 'Mostrar permisos',
+
+  // real state 
+  SECTOR = 'Sector',
+  SECTOR_SHOW = 'Mostrar sectores',
 }
