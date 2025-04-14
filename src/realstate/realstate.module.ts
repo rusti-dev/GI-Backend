@@ -1,25 +1,43 @@
 import { Module } from '@nestjs/common';
-import { UsersController } from './controllers/realstate.controller';
+import { RealStateController } from './controllers/realstate.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { RealStateEntity } from './entities/realstate.entity';
 import { RealStateService } from './services/realstate.service';
+import { PlanEntity } from './entities/Plan.entity';
+import { PaymentMethodEntity } from './entities/payment_method.entity';
+import { SubscriptionPaymentEntity } from './entities/subscription_payment.entity';
+import { SubscriptionEntity } from './entities/subscription.entity';
+import { PlanController } from './controllers/plan.controller';
+import { PlanService } from './services/plan.service';
+import { SubscriptionService } from './services/subscription.service';
+import { PaymentMethodService } from './services/payment_method.service';
+// import { UsersModule } from '@/users/users.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       RealStateEntity,
+      PlanEntity,
+      SubscriptionEntity,
+      PaymentMethodEntity,
+      SubscriptionPaymentEntity,
     ]),
     ConfigModule,
+    // UsersModule,
   ],
   controllers: [
-    UsersController,
+    PlanController,
+    RealStateController
   ],
   providers: [
-    RealStateService,
+    RealStateService, PlanService, SubscriptionService, PaymentMethodService
   ],
   exports: [
     RealStateService,
+    PlanService,
+    SubscriptionService,
+    PaymentMethodService,
     TypeOrmModule,
   ],
 })

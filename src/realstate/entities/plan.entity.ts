@@ -14,7 +14,7 @@ export class PlanEntity extends BaseEntity {
   @Column({ type: 'varchar', length: 100, nullable: false })
   name: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: false })
+  @Column({ type: 'varchar', length: 256, nullable: false })
   description: string;
 
   @Column({ type: 'float', nullable: false })
@@ -26,11 +26,20 @@ export class PlanEntity extends BaseEntity {
   @Column({ type: 'enum', enum: PlanInterval, nullable: false, default: PlanInterval.month })
   interval: PlanInterval;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'json', nullable: true })
   contentHtml: string;
 
   @Column({ type: 'boolean', nullable: false, default: true })
   is_active: boolean;
+
+  @Column({ type: 'int', nullable: true })
+  amount_users: number;
+
+  @Column({ type: 'int', nullable: true })
+  amount_properties: number;
+
+  @Column({ type: 'int', nullable: true })
+  amount_sectors: number;
 
   @OneToMany(() => SubscriptionEntity, (subscription) => subscription.plan, { onDelete: 'CASCADE', nullable: true })
   subscriptions: SubscriptionEntity[];

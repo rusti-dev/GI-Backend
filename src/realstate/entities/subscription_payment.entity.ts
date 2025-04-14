@@ -3,7 +3,7 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 import { SubscriptionEntity } from './subscription.entity';
 import { PaymentMethodEntity } from './payment_method.entity';
 
-enum STATE {
+export enum PAYMENT_STATE {
   paid = 'paid',
   pending = 'pending',
   failed = 'failed'
@@ -18,8 +18,8 @@ export class SubscriptionPaymentEntity extends BaseEntity {
   @Column({ type: 'float', nullable: false })
   amount: number;
 
-  @Column({ type: 'enum', enum: STATE, nullable: false, default: STATE.paid })
-  state: STATE;
+  @Column({ type: 'enum', enum: PAYMENT_STATE, nullable: false, default: PAYMENT_STATE.paid })
+  state: PAYMENT_STATE;
 
   @ManyToOne(() => SubscriptionEntity, (subscription) => subscription.subscription_payments, { onDelete: 'CASCADE' })
   subscription: SubscriptionEntity;

@@ -1,7 +1,7 @@
 import { BaseEntity } from 'src/common/entities/base.entity';
-import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
-import { SectorEntity } from './sector.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { SubscriptionEntity } from './subscription.entity';
+import { SectorEntity } from '@/sectors/entities/sector.entity';
 
 @Entity({ name: 'realstate' })
 export class RealStateEntity extends BaseEntity {
@@ -15,9 +15,9 @@ export class RealStateEntity extends BaseEntity {
   @Column({ type: 'varchar', nullable: false, length: 100 })
   address: string;
 
-  @OneToMany(() => SectorEntity, (sector) => sector.realState, { onDelete: 'CASCADE' })
-  sectores: SectorEntity[];
+  @OneToMany(() => SectorEntity, (sector) => sector.realState, { onDelete: 'CASCADE', nullable: true })
+  sectores?: SectorEntity[];
 
-  @OneToOne(() => SubscriptionEntity, (subscription) => subscription.realState, { onDelete: 'CASCADE', nullable: true })
-  subscription: SubscriptionEntity;
+  @OneToMany(() => SubscriptionEntity, (subscription) => subscription.realState, { onDelete: 'CASCADE', nullable: true })
+  subscriptions: SubscriptionEntity[]
 }
