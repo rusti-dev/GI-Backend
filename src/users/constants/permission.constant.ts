@@ -9,19 +9,21 @@ export enum PERMISSION {
   PERMISSION = 'Permiso',
   PERMISSION_SHOW = 'Mostrar permisos',
 
-  // real state 
-  SECTOR = 'Sector',
-  SECTOR_SHOW = 'Mostrar sectores',
-
   // realstate
   REALSTATE = 'Inmobiliaria',
   REALSTATE_SHOW = 'Mostrar inmobiliarias',
   REALSTATE_CREATE = 'Crear inmobiliarias',
   REALSTATE_UPDATE = 'Actualizar inmobiliarias',
   REALSTATE_DELETE = 'Eliminar inmobiliarias',
-  REALSTATE_PROPERTY = 'Propiedad',
-  REALSTATE_PROPERTY_SHOW = 'Mostrar propiedades',
-  REALSTATE_PROPERTY_CREATE = 'Crear propiedades',
-  REALSTATE_PROPERTY_UPDATE = 'Actualizar propiedades',
-  REALSTATE_PROPERTY_DELETE = 'Eliminar propiedades',
+  PROPERTY = 'Propiedad',
+  PROPERTY_SHOW = 'Mostrar propiedades',
+  PROPERTY_CREATE = 'Crear propiedades',
+  PROPERTY_UPDATE = 'Actualizar propiedades',
+  PROPERTY_DELETE = 'Eliminar propiedades',
+
+  SECTOR = 'Sector',
+  SECTOR_SHOW = 'Mostrar sectores',
+  SECTOR_CREATE = 'Crear sectores',
+  SECTOR_UPDATE = 'Actualizar sectores',
+  SECTOR_DELETE = 'Eliminar sectores',
 }

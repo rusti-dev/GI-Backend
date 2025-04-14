@@ -4,6 +4,7 @@ import { ApiQuery, ApiTags } from '@nestjs/swagger/dist/decorators';
 import { AuthDTO } from '../dto/auth.dto';
 import { AuthService } from '../services/auth.service';
 import { ResponseMessage } from '../../common/interfaces';
+import { RegisterUserDto } from '../dto/create-user.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -26,6 +27,15 @@ export class AuthController {
     return {
       statusCode: 200,
       data: await this.authService.checkToken(token)
+    };
+  }
+
+  // register
+  @Post('register')
+  public async register(@Body() register: RegisterUserDto): Promise<ResponseMessage> {
+    return {
+      statusCode: 201,
+      data: await this.authService.register(register),
     };
   }
 

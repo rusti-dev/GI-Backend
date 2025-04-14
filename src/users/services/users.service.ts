@@ -16,6 +16,7 @@ import { handlerError } from 'src/common/utils/handlerError.utils';
 import { ResponseMessage, ResponseGet } from 'src/common/interfaces';
 import { RoleService } from './role.service';
 import { ROLE } from 'src/users/constants/role.constant';
+import { SectorsService } from '@/sectors/sectors.service';
 
 @Injectable()
 export class UserService {
@@ -25,18 +26,21 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private readonly roleService: RoleService,
-  ) {}
+    private readonly sectorService: SectorsService,
+  ) { }
 
   public async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     try {
       const { password, role, ...user } = createUserDto;
       const passwordEncrypted = await this.encryptPassword(password);
       const roleFound = await this.roleService.exists(role);
+      const sectorFound = await this.sectorService.findOne(createUserDto.sector);
       const userCreate = this.userRepository.create({
         ...user,
         password: passwordEncrypted,
         role: roleFound,
-      });     
+        sector: createUserDto.sector ? sectorFound : null,
+      });
       const userCreated = await this.userRepository.save(userCreate);
       return await this.findOne(userCreated.id);
     } catch (error) {
@@ -50,7 +54,7 @@ export class UserService {
       const query = this.userRepository.createQueryBuilder('user');
       query.leftJoinAndSelect('user.role', 'role');
       query.leftJoinAndSelect('role.permissions', 'permissions');
-      query.leftJoinAndSelect('permissions.permission', 'permission');      
+      query.leftJoinAndSelect('permissions.permission', 'permission');
       query.andWhere('role.name != :role', { role: ROLE.ADMIN_SU });
       if (limit) query.take(limit);
       if (offset) query.skip(offset);
@@ -74,7 +78,9 @@ export class UserService {
         relations: [
           'role',
           'role.permissions',
-          'role.permissions.permission',          
+          'role.permissions.permission',
+          'sector',
+          'sector.realState',
         ],
       });
       if (!user) throw new NotFoundException('Usuario no encontrado.');
@@ -97,7 +103,7 @@ export class UserService {
         relations: [
           'role',
           'role.permissions',
-          'role.permissions.permission',          
+          'role.permissions.permission',
         ],
       });
       if (!user) throw new NotFoundException('Usuario no encontrado.');
@@ -114,7 +120,9 @@ export class UserService {
         relations: [
           'role',
           'role.permissions',
-          'role.permissions.permission',          
+          'role.permissions.permission',
+          'sector',
+          'sector.realState'
         ],
       });
       if (!user) throw new UnauthorizedException('User not found.');
@@ -129,7 +137,7 @@ export class UserService {
     updateUserDto: UpdateUserDto,
   ): Promise<UserEntity> {
     try {
-      const { role, password, ...userRest } = updateUserDto;
+      const { role, password, sector, ...userRest } = updateUserDto;
       const user: UserEntity = await this.findOne(id);
       let dataUserUpdated: Partial<UserEntity> = { ...userRest };
       if (password) {
@@ -139,7 +147,12 @@ export class UserService {
       if (role) {
         const roleFound = await this.roleService.findOne(role);
         dataUserUpdated = { ...dataUserUpdated, role: roleFound };
-      }     
+      }
+      if (sector) {
+        const sectorFound = await this.sectorService.findOne(sector);
+        dataUserUpdated = { ...dataUserUpdated, sector: sectorFound };
+      }
+
       const userUpdated = await this.userRepository.update(
         user.id,
         dataUserUpdated,
@@ -190,5 +203,13 @@ export class UserService {
 
   public async encryptPassword(password: string): Promise<string> {
     return bcrypt.hashSync(password, +process.env.HASH_SALT);
+  }
+
+  public async clear(): Promise<void> {
+    try {
+      await this.userRepository.clear();
+    } catch (error) {
+      handlerError(error, this.logger);
+    }
   }
 }
