@@ -1,15 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 
-
-
 export class CreateSectorDto {
     @ApiProperty({
         example: 'Sector Central',
         type: String,
         description: 'Nombre del sector',
     })
-    @IsNotEmpty() @IsString() @MinLength(3) @MaxLength(100)
+    @IsNotEmpty() @IsString()
     name: string;
 
     @ApiProperty({
@@ -17,7 +15,7 @@ export class CreateSectorDto {
         type: String,
         description: 'Dirección del sector',
     })
-    @IsNotEmpty() @IsString() @MinLength(5) @MaxLength(100)
+    @IsString()
     adress: string;
 
     @ApiProperty({
@@ -27,6 +25,14 @@ export class CreateSectorDto {
         nullable: true,
         required: false,
     })
-    @IsNotEmpty() @IsString() @MinLength(5) @MaxLength(15)
+    @IsString()
     phone: string;
+
+    @ApiProperty({
+        example: '123e4567-e89b-12d3-a456-426614174000',
+        type: String,
+        description: 'ID del estado real',
+    })
+    @IsNotEmpty() @IsString()
+    realStateId: string;
 }

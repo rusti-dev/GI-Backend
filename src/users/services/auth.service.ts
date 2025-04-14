@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import * as bcrypt from 'bcrypt';
@@ -11,9 +11,12 @@ import { IGenerateToken } from '../interfaces/generate-token.interface';
 import { IUserToken } from '../interfaces/userToken.interface';
 import { userToken } from '../utils/user-token.utils';
 import { handlerError } from 'src/common/utils/handlerError.utils';
-import { CreateUserDto } from '../dto/create-user.dto';
 import { RoleService } from './role.service';
 import { CreateCustomerDto } from '../dto/create-customer.dto';
+import { CreateUserDto, RegisterUserDto } from '../dto/create-user.dto';
+import { RealStateService } from '@/realstate/services/realstate.service';
+import { SectorsService } from '@/sectors/sectors.service';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +24,9 @@ export class AuthService {
 
   constructor(
     private readonly userService: UserService,
+    private readonly realStateService: RealStateService,
+    private readonly sectorService: SectorsService,
+    private readonly dataSources: DataSource,
     private readonly configService: ConfigService,
     private readonly roleService: RoleService,
   ) { }
@@ -30,7 +36,7 @@ export class AuthService {
       const user = await this.userService.findOneBy({
         key: 'email',
         value: email,
-      }); 
+      });
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!user || !isPasswordValid || !user.isActive)
         throw new NotFoundException('Usuario o contraseña incorrectos');
@@ -85,9 +91,64 @@ export class AuthService {
       handlerError(error, this.logger);
     }
   }
-  
+
   public singJWT({ payload, secret, expiresIn }: IGenerateToken) {
     const options: jwt.SignOptions = { expiresIn: expiresIn as any };  // Fuerza a un tipo compatible
     return jwt.sign(payload, secret, options);
+  }
+
+  public async register(registerDto: RegisterUserDto): Promise<any> {
+    try {
+      const { nameRealState, ...res } = registerDto;
+      const queryRunner = this.dataSources.createQueryRunner();
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+      try {
+        let roleId: string;
+        const findRole = await this.roleService.findOneBy({
+          key: 'name',
+          value: 'basic',
+        });
+        if (!findRole) {
+          const role = await this.roleService.create({
+            name: 'basic',
+            permissions: [],
+          });
+          roleId = role.id;
+        } else {
+          roleId = findRole.id;
+        }
+        const newRealState = await this.realStateService.create({
+          name: nameRealState,
+          address: '',
+          email: res.email,
+        });
+        const newSector = await this.sectorService.create({
+          name: nameRealState,
+          adress: '',
+          phone: '',
+          realStateId: newRealState.data.id,
+        });
+        const requestUser: CreateUserDto = {
+          ...res,
+          role: roleId,
+          sector: newSector.id,
+        };
+        const user = await this.userService.create(requestUser);
+
+        await queryRunner.manager.save(newRealState.data)
+        await queryRunner.manager.save(newSector)
+        await queryRunner.manager.save(user);
+        await queryRunner.commitTransaction();
+        return this.generateJWT(user);
+      } catch (error) {
+        await queryRunner.rollbackTransaction();
+        throw new InternalServerErrorException(error.message);
+      } finally {
+        await queryRunner.release();
+      }
+    } catch (error) {
+      handlerError(error, this.logger);
+    }
   }
 }

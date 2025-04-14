@@ -5,6 +5,7 @@ import { AuthDTO } from '../dto/auth.dto';
 import { AuthService } from '../services/auth.service';
 import { ResponseMessage } from '../../common/interfaces';
 import { CreateCustomerDto } from '../dto/create-customer.dto';
+import { RegisterUserDto } from '../dto/create-user.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -47,6 +48,15 @@ export class AuthController {
     };
   }
 
+
+  // register
+  @Post('register')
+  public async register(@Body() register: RegisterUserDto): Promise<ResponseMessage> {
+    return {
+      statusCode: 201,
+      data: await this.authService.register(register),
+    };
+  }
 
   // @Post('forgot-password')
   // public async requestPasswordForgot(@Body() sendEmailDTO: SendEmailDTO): Promise<ResponseMessage> {

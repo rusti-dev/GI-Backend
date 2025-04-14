@@ -100,6 +100,14 @@ export class RoleService {
     }
   }
 
+  public async findOneBy({ key, value }: { key: keyof CreateRoleDto; value: any }) {
+    try {
+      return await this.roleRepository.findOne({ where: { [key]: value } });
+    } catch (error) {
+      handlerError(error, this.logger);
+    }
+  }
+
   public async update(
     id: string,
     updateRoleDto: UpdateRoleDto,
@@ -190,6 +198,14 @@ export class RoleService {
         message: 'Rol eliminado correctamente.',
         statusCode: 200,
       };
+    } catch (error) {
+      handlerError(error, this.logger);
+    }
+  }
+
+  public async clear(): Promise<void> {
+    try {
+      await this.roleRepository.clear();
     } catch (error) {
       handlerError(error, this.logger);
     }

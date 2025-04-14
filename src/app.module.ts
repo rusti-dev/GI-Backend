@@ -6,7 +6,9 @@ import { ProvidersModule } from './providers/providers.module';
 import { CommonModule } from './common/common.module';
 import { SeederModule } from './seeder/seed.module';
 import { UsersModule } from './users/users.module';
+import { RealstateModule } from './realstate/realstate.module';
 import { SectorsModule } from './sectors/sectors.module';
+// import { RealstateModule } from './realstate/realstate.module';
 
 
 
@@ -15,10 +17,11 @@ import { SectorsModule } from './sectors/sectors.module';
         ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
         TypeOrmModule.forRoot({ ...DataSourceConfig }),
         ProvidersModule,
-        CommonModule,      
+        CommonModule,
         UsersModule,
-        SeederModule,
+        RealstateModule,
         SectorsModule,
+        SeederModule,
     ]
 })
 export class AppModule {}

@@ -3,14 +3,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SectorsService } from './sectors.service';
 import { SectorEntity } from './entities/sector.entity';
 import { SectorsController } from './sectors.controller';
-import { UsersModule } from '@/users/users.module';
+import { RealstateModule } from '@/realstate/realstate.module';
+// import { UsersModule } from '@/users/users.module';
 
 
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([ SectorEntity ]),
-        UsersModule,
+        RealstateModule,
+        // UsersModule
     ],
     controllers: [ SectorsController ],
     providers: [ SectorsService ],
