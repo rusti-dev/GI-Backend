@@ -154,6 +154,18 @@ export class RoleService {
     }
   }
 
+  public async findOneByName(name: string): Promise<RoleEntity> {
+    try {
+      const role = await this.roleRepository.findOne({ where: { name } });
+      if (!role) {
+        throw new NotFoundException(`El rol "${name}" no existe`);
+      }
+      return role;
+    } catch (error) {
+      handlerError(error, this.logger);
+    }
+  }
+
   public async remove(id: string): Promise<ResponseMessage> {
     try {
       const role = await this.roleRepository.findOne({

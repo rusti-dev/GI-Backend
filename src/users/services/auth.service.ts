@@ -11,6 +11,9 @@ import { IGenerateToken } from '../interfaces/generate-token.interface';
 import { IUserToken } from '../interfaces/userToken.interface';
 import { userToken } from '../utils/user-token.utils';
 import { handlerError } from 'src/common/utils/handlerError.utils';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { RoleService } from './role.service';
+import { CreateCustomerDto } from '../dto/create-customer.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,14 +22,15 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly configService: ConfigService,
-  ) {}
+    private readonly roleService: RoleService,
+  ) { }
 
   public async login(email: string, password: string): Promise<any> {
     try {
       const user = await this.userService.findOneBy({
         key: 'email',
         value: email,
-      });
+      }); 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!user || !isPasswordValid || !user.isActive)
         throw new NotFoundException('Usuario o contraseña incorrectos');
@@ -52,7 +56,7 @@ export class AuthService {
     const userLogged: UserEntity = await this.userService.findOne(user.id);
     const payload: IPayload = {
       sub: userLogged.id,
-      role: userLogged.role.id,      
+      role: userLogged.role.id,
     };
     const accessToken = this.singJWT({
       payload,
@@ -65,8 +69,25 @@ export class AuthService {
     };
   }
 
+  public async registerCustomer(dto: CreateCustomerDto): Promise<any> {
+    try {
+      const clienteRole = await this.roleService.findOneByName('Cliente');  //Debe existir un rol con nombre Cliente exactamente, para que asigne por default el rol usuario
+
+
+      const userDto: CreateUserDto = {
+        ...dto,
+        role: clienteRole.id,
+      };
+
+      const user = await this.userService.create(userDto);
+      return this.generateJWT(user);
+    } catch (error) {
+      handlerError(error, this.logger);
+    }
+  }
+  
   public singJWT({ payload, secret, expiresIn }: IGenerateToken) {
     const options: jwt.SignOptions = { expiresIn: expiresIn as any };  // Fuerza a un tipo compatible
-    return jwt.sign(payload, secret, options );
+    return jwt.sign(payload, secret, options);
   }
 }
