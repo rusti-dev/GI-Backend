@@ -48,8 +48,6 @@ export class AuthController {
     };
   }
 
-
-  // register
   @Post('register')
   public async register(@Body() register: RegisterUserDto): Promise<ResponseMessage> {
     return {
