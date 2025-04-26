@@ -127,6 +127,33 @@ export class SeedService {
             type: PermissionType.USERS,
         });
 
+        // owners
+        const owners = await this.permissionService.create({
+            name: PERMISSION.OWNER,
+            description: 'permite gestionar propietarios',
+            type: PermissionType.USERS,
+        });
+        const ownersShow = await this.permissionService.create({
+            name: PERMISSION.OWNER_SHOW,
+            description: 'permite ver propietarios',
+            type: PermissionType.USERS,
+        });
+        const ownersCreate = await this.permissionService.create({
+            name: PERMISSION.OWNER_CREATE,
+            description: 'permite crear propietarios',
+            type: PermissionType.USERS,
+        });
+        const ownersUpdate = await this.permissionService.create({
+            name: PERMISSION.OWNER_UPDATE,
+            description: 'permite actualizar propietarios',
+            type: PermissionType.USERS,
+        });
+        const ownersDelete = await this.permissionService.create({
+            name: PERMISSION.OWNER_DELETE,
+            description: 'permite eliminar propietarios',
+            type: PermissionType.USERS,
+        });
+
         const permissionSU = [
             users.id,
             usersShow.id,
@@ -160,6 +187,11 @@ export class SeedService {
             realstateCreate.id,
             realstateUpdate.id,
             realstateDelete.id,
+            owners.id,
+            ownersShow.id,
+            ownersCreate.id,
+            ownersUpdate.id,
+            ownersDelete.id,
         ]
 
         this.administradorSU = await this.roleService.create({
