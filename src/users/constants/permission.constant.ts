@@ -26,4 +26,10 @@ export enum PERMISSION {
   SECTOR_CREATE = 'Crear sectores',
   SECTOR_UPDATE = 'Actualizar sectores',
   SECTOR_DELETE = 'Eliminar sectores',
+
+  OWNER = 'Propietario',
+  OWNER_SHOW = 'Mostrar propietarios',
+  OWNER_CREATE = 'Crear propietarios',
+  OWNER_UPDATE = 'Actualizar propietarios',
+  OWNER_DELETE = 'Eliminar propietarios',
 }
