@@ -11,7 +11,7 @@ import { RoleService } from "src/users/services/role.service";
 import { UserService } from "src/users/services/users.service";
 import { handlerError } from "src/common/utils";
 import { PlanService } from "@/realstate/services/plan.service";
-import { PlanInterval } from "@/realstate/entities/Plan.entity";
+import { PlanInterval } from "@/realstate/entities/plan.entity";
 import { DataSource } from "typeorm";
 import { PaymentMethodService } from "@/realstate/services/payment_method.service";
 import { PAYMENTMETHOD } from "@/realstate/entities/payment_method.entity";
