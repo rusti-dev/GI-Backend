@@ -32,17 +32,4 @@ export enum PERMISSION {
   OWNER_CREATE = 'Crear propietarios',
   OWNER_UPDATE = 'Actualizar propietarios',
   OWNER_DELETE = 'Eliminar propietarios',
-
-  CATEGORY = 'Categoría',
-  CATEGORY_SHOW = 'Mostrar categorías',
-  CATEGORY_CREATE = 'Crear categorías',
-  CATEGORY_UPDATE = 'Actualizar categorías',
-  CATEGORY_DELETE = 'Eliminar categorías',
-
-  MODALITY = 'Modalidad',
-  MODALITY_SHOW = 'Mostrar modalidades',
-  MODALITY_CREATE = 'Crear modalidades',
-  MODALITY_UPDATE = 'Actualizar modalidades',
-  MODALITY_DELETE = 'Eliminar modalidades',
-
 }
