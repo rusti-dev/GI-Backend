@@ -1,16 +1,16 @@
+import { AuthDTO } from '../dto/auth.dto';
+import { AuthService } from '../services/auth.service';
+import { RegisterUserDto } from '../dto/create-user.dto';
+import { ResponseMessage } from '../../common/interfaces';
+import { CreateCustomerDto } from '../dto/create-customer.dto';
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger/dist/decorators';
 
-import { AuthDTO } from '../dto/auth.dto';
-import { AuthService } from '../services/auth.service';
-import { ResponseMessage } from '../../common/interfaces';
-import { CreateCustomerDto } from '../dto/create-customer.dto';
-import { RegisterUserDto } from '../dto/create-user.dto';
+
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-
   constructor(private readonly authService: AuthService) { }
 
   @Post('login')
@@ -28,6 +28,14 @@ export class AuthController {
     return {
       statusCode: 200,
       data: await this.authService.checkToken(token)
+    };
+  }
+
+  @Post('google/login')
+  public async googleLogin(@Body('token') token: string): Promise<ResponseMessage> {
+    return {
+      statusCode: 200,
+      data: await this.authService.googleLogin(token),
     };
   }
 

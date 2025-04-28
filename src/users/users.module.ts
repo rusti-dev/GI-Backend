@@ -22,6 +22,7 @@ import { OwnerService } from './services/owner.service';
 import { ClientEntity } from './entities/client.entity';
 import { ClientService } from './services/client.service';
 import { ClientController } from './controllers/client.controller';
+import { HttpCustomService } from '@/providers/http/http.service';
 
 
 
@@ -56,6 +57,7 @@ import { ClientController } from './controllers/client.controller';
         UserService,
         OwnerService,
         ClientService,
+        HttpCustomService,
     ],
     exports: [
         AuthService,

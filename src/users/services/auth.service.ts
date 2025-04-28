@@ -1,22 +1,26 @@
 import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { HttpCustomService } from '@/providers/http/http.service';
+
 
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
-import { UserService } from 'src/users/services/users.service';
-import { UserEntity } from 'src/users/entities/user.entity';
-import { IPayload } from '../interfaces/payload.interface';
-import { IGenerateToken } from '../interfaces/generate-token.interface';
-import { IUserToken } from '../interfaces/userToken.interface';
-import { userToken } from '../utils/user-token.utils';
-import { handlerError } from 'src/common/utils/handlerError.utils';
+import { DataSource } from 'typeorm';
 import { RoleService } from './role.service';
+import { userToken } from '../utils/user-token.utils';
+import { IPayload } from '../interfaces/payload.interface';
+import { SectorsService } from '@/sectors/sectors.service';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { UserService } from 'src/users/services/users.service';
+import { IUserToken } from '../interfaces/userToken.interface';
 import { CreateCustomerDto } from '../dto/create-customer.dto';
+import { handlerError } from 'src/common/utils/handlerError.utils';
+import { IGenerateToken } from '../interfaces/generate-token.interface';
 import { CreateUserDto, RegisterUserDto } from '../dto/create-user.dto';
 import { RealStateService } from '@/realstate/services/realstate.service';
-import { SectorsService } from '@/sectors/sectors.service';
-import { DataSource } from 'typeorm';
+
+
 
 @Injectable()
 export class AuthService {
@@ -29,6 +33,7 @@ export class AuthService {
     private readonly dataSources: DataSource,
     private readonly configService: ConfigService,
     private readonly roleService: RoleService,
+    private readonly httpService: HttpCustomService,
   ) { }
 
   public async login(email: string, password: string): Promise<any> {
@@ -45,6 +50,7 @@ export class AuthService {
       handlerError(error, this.logger);
     }
   }
+
   public async checkToken(token: string): Promise<UserEntity> {
     try {
       const managerToken: IUserToken | string = userToken(token);
@@ -86,6 +92,24 @@ export class AuthService {
       };
 
       const user = await this.userService.create(userDto);
+      return this.generateJWT(user);
+    } catch (error) {
+      handlerError(error, this.logger);
+    }
+  }
+
+  public async googleLogin(token: string): Promise<any> {
+    try {
+      const googleApiUrl = `https://oauth2.googleapis.com/tokeninfo?id_token=${token}`;
+      const googleData = await this.httpService.apiCheckTokenGoogle(googleApiUrl);
+
+      const { email } = googleData;
+      const user = await this.userService.findOneBy({ key: 'email', value: email });
+
+      if (!user || !user.isActive) {
+        throw new NotFoundException('Usuario no encontrado o inactivo.');
+      }
+
       return this.generateJWT(user);
     } catch (error) {
       handlerError(error, this.logger);
