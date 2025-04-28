@@ -19,43 +19,53 @@ import { SectorsModule } from '@/sectors/sectors.module';
 import { OwnerEntity } from './entities/owner.entity';
 import { OwnerController } from './controllers/owner.controller';
 import { OwnerService } from './services/owner.service';
+import { ClientEntity } from './entities/client.entity';
+import { ClientService } from './services/client.service';
+import { ClientController } from './controllers/client.controller';
+
+
 
 @Global()
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      PermissionEntity,
-      PermissionRoleEntity,
-      RoleEntity,
-      UserEntity,
-      OwnerEntity,
-    ]),
-    RealstateModule,
-    SectorsModule,
-    ConfigModule,
-  ],
-  controllers: [
-    AuthController,
-    PermissionController,
-    RoleController,
-    UsersController,
-    OwnerController,
-  ],
-  providers: [
-    AuthService,
-    PermissionService,
-    PermissionRoleService,
-    RoleService,
-    UserService,
-    OwnerService,
-  ],
-  exports: [
-    AuthService,
-    PermissionService,
-    PermissionRoleService,
-    RoleService,
-    UserService,
-    TypeOrmModule,
-  ],
+    imports: [
+        TypeOrmModule.forFeature([
+            PermissionEntity,
+            PermissionRoleEntity,
+            RoleEntity,
+            UserEntity,
+            OwnerEntity,
+            ClientEntity,
+        ]),
+        RealstateModule,
+        SectorsModule,
+        ConfigModule,
+    ],
+    controllers: [
+        AuthController,
+        PermissionController,
+        RoleController,
+        UsersController,
+        OwnerController,
+        ClientController,
+    ],
+    providers: [
+        AuthService,
+        PermissionService,
+        PermissionRoleService,
+        RoleService,
+        UserService,
+        OwnerService,
+        ClientService,
+    ],
+    exports: [
+        AuthService,
+        PermissionService,
+        PermissionRoleService,
+        RoleService,
+        UserService,
+        ClientService,
+        TypeOrmModule,
+    ],
 })
+
 export class UsersModule {}
