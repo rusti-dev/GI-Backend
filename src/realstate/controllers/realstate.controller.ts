@@ -52,9 +52,9 @@ export class RealStateController {
       data: await this.realStateService.create(createRealStateDto),
     };
   }
-  @UseGuards(AuthGuard, PermissionGuard)
+  @UseGuards(AuthGuard, PermissionGuard)   
   @ApiBearerAuth()
-  @PermissionAccess(PERMISSION.REALSTATE, PERMISSION.REALSTATE_SHOW)
+  //@PermissionAccess(PERMISSION.REALSTATE, PERMISSION.REALSTATE_SHOW) //Es necesario proteger esta endpoint que solo hace GET de todos los realstates?
   @ApiQuery({ name: 'limit', type: 'number', required: false })
   @ApiQuery({ name: 'offset', type: 'number', required: false })
   @ApiQuery({ name: 'order', enum: ORDER_ENUM, required: false })
