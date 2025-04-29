@@ -37,7 +37,8 @@ export class SectorsService {
     public async findAll(queryDto: QueryDto): Promise<ResponseGet> {
         try {
             const { limit, offset, order, attr, value } = queryDto;
-            const query = this.sectorRepository.createQueryBuilder('sector');
+            const query = this.sectorRepository.createQueryBuilder('sector')
+                .leftJoinAndSelect('sector.realState', 'realState');
 
             if (limit) query.take(limit);
             if (offset) query.skip(offset);
@@ -45,8 +46,21 @@ export class SectorsService {
             if (attr && value) {
                 query.andWhere(`sector.${attr} ILIKE :value`, { value: `%${value}%` });
             }
+            // Se tiene que colocar estas lineas de codigo tambien
+            const sectors = await query.getMany();
+            
+            const enhancedSectors = sectors.map(sector => {
+                if (sector.realState) {
+                    return {
+                        ...sector,
+                        realStateId: sector.realState.id
+                    };
+                }
+                return sector;
+            });
+            
             return {
-                data: await query.getMany(),
+                data: enhancedSectors,
                 countData: await query.getCount(),
             };
         } catch (error) {
