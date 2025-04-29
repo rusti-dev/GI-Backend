@@ -14,6 +14,7 @@ import { RoleController } from './controllers/role.controller';
 import { PermissionController } from './controllers/permission.controller';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
+import { CustomerAuthService } from './services/customer-auth.service';
 import { RealstateModule } from '@/realstate/realstate.module';
 import { SectorsModule } from '@/sectors/sectors.module';
 import { OwnerEntity } from './entities/owner.entity';
@@ -51,6 +52,7 @@ import { HttpCustomService } from '@/providers/http/http.service';
     ],
     providers: [
         AuthService,
+        CustomerAuthService,
         PermissionService,
         PermissionRoleService,
         RoleService,

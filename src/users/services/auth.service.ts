@@ -78,21 +78,7 @@ export class AuthService {
         };
     }
 
-    public async registerCustomer(dto: CreateCustomerDto): Promise<any> {
-        try {
-            const clienteRole = await this.roleService.findOneByName('Cliente');  //Debe existir un rol con nombre Cliente exactamente, para que asigne por default el rol usuario
-
-            const userDto: CreateUserDto = {
-                ...dto,
-                role: clienteRole.id,
-            };
-
-            const user = await this.userService.create(userDto);
-            return this.generateJWT(user);
-        } catch (error) {
-            handlerError(error, this.logger);
-        }
-    }
+    
 
     public async googleLogin(token: string): Promise<any> {
         try {
