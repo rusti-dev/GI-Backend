@@ -9,11 +9,11 @@ import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { ConfigService } from '@nestjs/config';
 import { PropertyEntity } from '../entities/property.entity';
 import { SectorsService } from '@/sectors/sectors.service';
-//import { UbicacionService } from './ubicacion.service';
+import { UbicacionService } from './ubicacion.service';
 import { UserService } from '@/users/services/users.service'; 
-//import {CatgoriaService} from ''
-//import {ModalidadService} from ''
-//y importar lo de dueños y imagenes
+import { CategoryService } from '@/state/services/category.service';
+import { ModalityService } from '@/state/services/modality.service';
+//y importar lo de  imagenes
 
 @Injectable()
 export class PropertyService {
@@ -22,24 +22,31 @@ export class PropertyService {
   constructor(
    @InjectRepository(PropertyEntity)
    private readonly propertyRepository: Repository<PropertyEntity>,
-   //private readonly ubicacionService: UbicacionService,
+   private readonly ubicacionService: UbicacionService,
    private readonly sectorService: SectorsService,
    private readonly userService: UserService,
+   private readonly categoryService: CategoryService,
+   private readonly modalityService: ModalityService,
    private configService: ConfigService
   ){ }
 
   public async create(createPropertyDto: CreatePropertyDto): Promise<ResponseMessage>{
    try{
-     const {user,sector,...property}=createPropertyDto;
+     const {user,sector,category,modality,ubicacion,...property}=createPropertyDto;
 
      const userFound = await this.userService.findOne(user);
      const sectorFound = await this.sectorService.findOne(sector);
+     const categoryFound = await this.categoryService.findOne(category);
+     const modalityFound =  await this.modalityService.findOne(modality);
+     const createdUbicacion= (await this.ubicacionService.create(ubicacion)).data; 
+
      const createProperty = this.propertyRepository.create({
                             ...property,
                             user: userFound,
                             sector: sectorFound,
-                            categoria: property.categoria ? { id: property.categoria } : undefined,
-                            modalidad: property.modalidad ? { id: property.modalidad } : undefined,
+                            category: categoryFound,
+                            modality: modalityFound,
+                            ubicacion: createdUbicacion,
                             });
 
       const createdProperty = await this.propertyRepository.save(createProperty);
@@ -84,8 +91,8 @@ export class PropertyService {
       where: {id},
       relations:[
         'user',
-        'categoria',
-        'modalidad',
+        'category',
+        'modality',
         'sector',
         'imagenes',
         'ubicacion',
@@ -103,11 +110,32 @@ export class PropertyService {
 
   public async update(id: string, updatePropertyDto: UpdatePropertyDto): Promise<ResponseMessage> {
    try{
-    const property = await this.propertyRepository.findOne({ where: {id}});
+    const property = await this.propertyRepository.findOne({ where: {id},relations: ['ubicacion'],});
     if(!property){
      throw new Error('Property not found'); 
     }
-    //await this.propertyRepository.update(id,updatePropertyDto);
+    const {user,sector,category,modality,ubicacion,...propertyData}=updatePropertyDto;
+
+    const userFound = await this.userService.findOne(user);
+    const sectorFound = await this.sectorService.findOne(sector);
+    const categoryFound = await this.categoryService.findOne(category);
+    const modalityFound =  await this.modalityService.findOne(modality);
+    
+    let updateUbicacion= property.ubicacion;
+    if(ubicacion){
+      updateUbicacion= (await this.ubicacionService.update(property.ubicacion.id, ubicacion)).data;
+    }
+
+    let updatedProperty: Partial<PropertyEntity> = {
+                          ...property,
+                          user: userFound,
+                          sector: sectorFound,
+                          category: categoryFound,
+                          modality: modalityFound,
+                          ubicacion: updateUbicacion,
+                        }; 
+
+    await this.propertyRepository.update(id,updatedProperty);
     return{
       statusCode: 200,
       data: await this.propertyRepository.findOne({ where: {id}}),
@@ -119,19 +147,25 @@ export class PropertyService {
 
   public async delete(id: string): Promise<ResponseMessage> {
    try{ 
-    const property = await this.propertyRepository.findOne({ where: {id}});
+    const property = await this.propertyRepository.findOne({ where: {id},relations: ['ubicacion',]});
     if(!property){
      throw new Error('Property not found'); 
     }
+
+    if(property.ubicacion){
+      await this.ubicacionService.delete(property.ubicacion.id);
+    }
+    
     const result=await this.propertyRepository.remove(property);
     if(!result){ 
      throw new Error('Property not deleted');
     }
+
     return {
       statusCode: 200,
       message: 'Property deleted successfully'};
    }catch(error){
     handlerError(error,this.logger); 
    }
-  }
+  }  
 }

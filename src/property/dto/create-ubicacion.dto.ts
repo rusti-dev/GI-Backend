@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString,IsNotEmpty, IsNumber,IsUUID } from 'class-validator';
+import { IsString,IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateUbicacionDto{
  @ApiProperty({
@@ -41,10 +41,4 @@ latitud: number
  @IsNumber()
  @IsNotEmpty() 
 longitud: number
-
- @ApiProperty({example: 'uuid-del-property'})
-  @IsString()
-  @IsUUID()
-  @IsNotEmpty()
-  sectorId:string;
 }

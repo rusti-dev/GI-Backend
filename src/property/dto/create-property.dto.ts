@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString,IsUUID,MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString,IsUUID,MinLength,ValidateNested } from 'class-validator';
 import { EstadoProperty } from '../entities/property.entity'; 
+import { CreateUbicacionDto } from './create-ubicacion.dto';
 
 export class CreatePropertyDto {
  @ApiProperty({ 
@@ -80,17 +82,22 @@ export class CreatePropertyDto {
   @IsString()
   @IsUUID()
   @IsNotEmpty()
-  categoria:string;
+  category:string;
   
   @ApiProperty({example: 'ID',type: String,description: 'Id de la modalidad'})
   @IsString()
   @IsUUID()
   @IsNotEmpty()
-  modalidad:string;
+  modality:string;
 
   @ApiProperty({example: 'ID',type: String,description: 'Id del sector',})
   @IsString()
   @IsUUID()
   @IsNotEmpty()
   sector:string;
+
+  @ApiProperty({ type: CreateUbicacionDto })
+  @ValidateNested()
+  @Type(()=> CreateUbicacionDto)
+  ubicacion: CreateUbicacionDto;
 }

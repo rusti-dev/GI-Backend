@@ -9,16 +9,16 @@ import { UbicacionController } from './controllers/ubicacion.controller';
 import { UbicacionEntity } from './entities/ubicacion.entity';
 import { SectorsModule } from '@/sectors/sectors.module'; 
 import { UsersModule } from '@/users/users.module';
+import { StateModule } from '@/state/state.module';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([
-    PropertyEntity,
-    UbicacionEntity
-  ]),
-  UsersModule,
-  SectorsModule,
-  ConfigModule],
+  imports: [TypeOrmModule.forFeature([PropertyEntity,UbicacionEntity]),
+   UsersModule,
+   SectorsModule,
+   StateModule,
+   ConfigModule
+  ],
 
   controllers: [PropertyController, UbicacionController],
   providers: [PropertyService, UbicacionService],

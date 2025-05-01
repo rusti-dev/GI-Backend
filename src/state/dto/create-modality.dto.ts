@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class CreateModalityDto {
   @ApiProperty({
@@ -9,4 +9,4 @@ export class CreateModalityDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-}
+  }

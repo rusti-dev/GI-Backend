@@ -1,9 +1,9 @@
 import { BaseEntity } from 'src/common/entities/base.entity';
-import { Column, Entity, ManyToOne, OneToMany, OneToOne} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne} from 'typeorm';
 import { UserEntity } from '@/users/entities/user.entity';
-import { CategoriaEntity } from './categoria.entity';
-import { ModalidadEntity } from './modalidad.entity'; 
-import { PropertyDuenoEntity } from './property_dueno.entity';
+import { Category} from '@/state/entities/category.entity';
+import { Modality } from '@/state/entities/modality.entity'; 
+import { PropertyOwnerEntity } from './property_owner.entity';
 import { UbicacionEntity } from './ubicacion.entity';
 import { ImagenEntity } from './imagen.entity';
 import { SectorEntity } from '@/sectors/entities/sector.entity';
@@ -43,11 +43,11 @@ export class PropertyEntity extends BaseEntity {
  @ManyToOne( ()=>UserEntity, (user) => user.propertys,{onDelete: 'CASCADE', nullable: true})
   user: UserEntity;
   
- @ManyToOne( ()=>CategoriaEntity, (categoria) => categoria.propertys,{onDelete: 'CASCADE'})
-  categoria: CategoriaEntity;
+ @ManyToOne( ()=>Category, (category) => category.propertys,{onDelete: 'CASCADE'})
+ category: Category;
  
- @ManyToOne(()=>ModalidadEntity, (modalidad)=> modalidad.propertys,{onDelete: 'CASCADE'})
-  modalidad: ModalidadEntity;
+ @ManyToOne(()=>Modality, (modality)=> modality.propertys,{onDelete: 'CASCADE'})
+  modality: Modality;
 
  @ManyToOne( ()=>SectorEntity, (sector)=> sector.propertys,{onDelete: 'CASCADE'})
  sector: SectorEntity; 
@@ -56,9 +56,10 @@ export class PropertyEntity extends BaseEntity {
  imagenes: ImagenEntity[];  
  
  @OneToOne(() => UbicacionEntity, (ubicacion) => ubicacion.property, { onDelete: 'CASCADE' })
+ @JoinColumn()
  ubicacion: UbicacionEntity;
  
- @OneToMany(()=>PropertyDuenoEntity,(property_dueno)=> property_dueno.property,{onDelete: 'CASCADE'})
- propertys_duenos: PropertyDuenoEntity[];
+ @OneToMany(()=>PropertyOwnerEntity,(property_owner)=> property_owner.property,{onDelete: 'CASCADE'})
+ property_owner: PropertyOwnerEntity[];
 
 }

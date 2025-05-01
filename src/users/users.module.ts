@@ -19,6 +19,8 @@ import { SectorsModule } from '@/sectors/sectors.module';
 import { OwnerEntity } from './entities/owner.entity';
 import { OwnerController } from './controllers/owner.controller';
 import { OwnerService } from './services/owner.service';
+import { PropertyEntity } from '@/property/entities/property.entity';
+import { PropertyOwnerEntity } from '@/property/entities/property_owner.entity';
 
 @Global()
 @Module({
@@ -29,6 +31,8 @@ import { OwnerService } from './services/owner.service';
       RoleEntity,
       UserEntity,
       OwnerEntity,
+      PropertyEntity,
+      PropertyOwnerEntity,
     ]),
     RealstateModule,
     SectorsModule,

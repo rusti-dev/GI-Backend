@@ -21,7 +21,6 @@ latitud: number;
 longitud:number;
 
  //relacion
- @OneToOne(()=>PropertyEntity)
- @JoinColumn()
+ @OneToOne(()=>PropertyEntity,(property)=> property.ubicacion)
  property: PropertyEntity;    
 }
