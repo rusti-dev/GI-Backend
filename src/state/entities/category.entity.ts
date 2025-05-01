@@ -1,9 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity } from '@/common/entities/base.entity';
+import { Column, Entity } from 'typeorm';
 
-@Entity('categories')
-export class Category {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+@Entity({ name: 'categories' })
+export class CategoryEntity extends BaseEntity {
 
   @Column({ length: 100 })
   name: string;
