@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable,  Logger} from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ModalityEntity } from '../entities/modality.entity';
 import { CreateModalityDto } from '../dto/create-modality.dto';
 import { UpdateModalityDto } from '../dto/update-modality.dto';
+
 
 @Injectable()
 export class ModalityService {
@@ -24,7 +25,7 @@ export class ModalityService {
   async findOne(id: string): Promise<ModalityEntity> {
     const modality = await this.modalityRepository.findOne({ where: { id } });
     if (!modality) {
-      throw new NotFoundException(`Modality with ID ${id} not found`);
+      throw new Error(`Category with ID ${id} not found`);
     }
     return modality;
   }

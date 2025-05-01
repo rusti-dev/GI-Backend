@@ -1,6 +1,7 @@
 import { BaseEntity } from "@/common/entities/base.entity";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import { IOwner } from "../interfaces/owner.interface";
+import { PropertyOwnerEntity } from "@/property/entities/property_owner.entity";
 
 @Entity({ name: "owner" })
 export class OwnerEntity extends BaseEntity implements IOwner {
@@ -18,4 +19,8 @@ export class OwnerEntity extends BaseEntity implements IOwner {
 
   @Column({type:'boolean', default: true })
   isActive: boolean;
+
+  /*relacion*/
+  @OneToMany(()=>PropertyOwnerEntity,(property_owner)=> property_owner.owner,{onDelete: 'CASCADE'})
+   property_owner: PropertyOwnerEntity[];
 }

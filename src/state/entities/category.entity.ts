@@ -1,5 +1,6 @@
 import { BaseEntity } from '@/common/entities/base.entity';
-import { Column, Entity } from 'typeorm';
+import { PropertyEntity } from '@/property/entities/property.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity({ name: 'categories' })
 export class CategoryEntity extends BaseEntity {
@@ -9,4 +10,7 @@ export class CategoryEntity extends BaseEntity {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToMany( ()=> PropertyEntity, (property) => property.category)
+   propertys: PropertyEntity[];  
 }
