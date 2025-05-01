@@ -13,8 +13,8 @@ import { AuthCustomerDto } from '../dto/auth-customer.dto';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly customerAuthService: CustomerAuthService, 
-  ) {}
+    private readonly customerAuthService: CustomerAuthService,
+  ) { }
 
   @Post('login')
   public async login(@Body() authDto: AuthDTO): Promise<ResponseMessage> {
@@ -56,6 +56,15 @@ export class AuthController {
     return {
       statusCode: 201,
       data: await this.customerAuthService.customerRegister(dto),
+    };
+  }
+
+  @ApiQuery({ name: 'token', type: 'string', required: true })
+  @Get('customer/checkToken')
+  public async checkCustomerToken(@Query('token') token: string): Promise<ResponseMessage> {
+    return {
+      statusCode: 200,
+      data: await this.customerAuthService.checkCustomerToken(token),
     };
   }
 
