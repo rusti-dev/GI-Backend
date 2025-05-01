@@ -8,6 +8,7 @@ import { SeederModule } from './seeder/seed.module';
 import { UsersModule } from './users/users.module';
 import { RealstateModule } from './realstate/realstate.module';
 import { SectorsModule } from './sectors/sectors.module';
+import {StateModule} from './state/state.module';
 // import { RealstateModule } from './realstate/realstate.module';
 import { PropertyModule } from './property/property.module';
 
@@ -24,6 +25,7 @@ import { PropertyModule } from './property/property.module';
         SectorsModule,
         SeederModule,
         PropertyModule,
+        StateModule,
     ]
 })
 export class AppModule {}

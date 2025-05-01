@@ -16,6 +16,9 @@ import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
 import { RealstateModule } from '@/realstate/realstate.module';
 import { SectorsModule } from '@/sectors/sectors.module';
+import { OwnerEntity } from './entities/owner.entity';
+import { OwnerController } from './controllers/owner.controller';
+import { OwnerService } from './services/owner.service';
 
 @Global()
 @Module({
@@ -25,6 +28,7 @@ import { SectorsModule } from '@/sectors/sectors.module';
       PermissionRoleEntity,
       RoleEntity,
       UserEntity,
+      OwnerEntity,
     ]),
     RealstateModule,
     SectorsModule,
@@ -35,6 +39,7 @@ import { SectorsModule } from '@/sectors/sectors.module';
     PermissionController,
     RoleController,
     UsersController,
+    OwnerController,
   ],
   providers: [
     AuthService,
@@ -42,6 +47,7 @@ import { SectorsModule } from '@/sectors/sectors.module';
     PermissionRoleService,
     RoleService,
     UserService,
+    OwnerService,
   ],
   exports: [
     AuthService,

@@ -127,6 +127,88 @@ export class SeedService {
             type: PermissionType.USERS,
         });
 
+        // owners
+        const owners = await this.permissionService.create({
+            name: PERMISSION.OWNER,
+            description: 'permite gestionar propietarios',
+            type: PermissionType.USERS,
+        });
+        const ownersShow = await this.permissionService.create({
+            name: PERMISSION.OWNER_SHOW,
+            description: 'permite ver propietarios',
+            type: PermissionType.USERS,
+        });
+        const ownersCreate = await this.permissionService.create({
+            name: PERMISSION.OWNER_CREATE,
+            description: 'permite crear propietarios',
+            type: PermissionType.USERS,
+        });
+        const ownersUpdate = await this.permissionService.create({
+            name: PERMISSION.OWNER_UPDATE,
+            description: 'permite actualizar propietarios',
+            type: PermissionType.USERS,
+        });
+        const ownersDelete = await this.permissionService.create({
+            name: PERMISSION.OWNER_DELETE,
+            description: 'permite eliminar propietarios',
+            type: PermissionType.USERS,
+        });
+
+        // categories
+        const categories = await this.permissionService.create({
+            name: PERMISSION.CATEGORY,
+            description: 'permite gestionar categorías',
+            type: PermissionType.USERS,
+        });
+        const categoriesShow = await this.permissionService.create({
+            name: PERMISSION.CATEGORY_SHOW,
+            description: 'permite ver categorías',
+            type: PermissionType.USERS,
+        });
+        const categoriesCreate = await this.permissionService.create({
+            name: PERMISSION.CATEGORY_CREATE,
+            description: 'permite crear categorías',
+            type: PermissionType.USERS,
+        });
+        const categoriesUpdate = await this.permissionService.create({
+            name: PERMISSION.CATEGORY_UPDATE,
+            description: 'permite actualizar categorías',
+            type: PermissionType.USERS,
+        });
+        const categoriesDelete = await this.permissionService.create({
+            name: PERMISSION.CATEGORY_DELETE,
+            description: 'permite eliminar categorías',
+            type: PermissionType.USERS,
+        });
+
+        // modalities
+        const modalities = await this.permissionService.create({
+            name: PERMISSION.MODALITY,
+            description: 'Permite gestionar modalidades',
+            type: PermissionType.USERS,
+        });
+        const modalitiesShow = await this.permissionService.create({
+            name: PERMISSION.MODALITY_SHOW,
+            description: 'Permite ver modalidades',
+            type: PermissionType.USERS,
+        });
+        const modalitiesCreate = await this.permissionService.create({
+            name: PERMISSION.MODALITY_CREATE,
+            description: 'Permite crear modalidades',
+            type: PermissionType.USERS,
+        });
+        const modalitiesUpdate = await this.permissionService.create({
+            name: PERMISSION.MODALITY_UPDATE,
+            description: 'Permite actualizar modalidades',
+            type: PermissionType.USERS,
+        });
+        const modalitiesDelete = await this.permissionService.create({
+            name: PERMISSION.MODALITY_DELETE,
+            description: 'Permite eliminar modalidades',
+            type: PermissionType.USERS,
+        });
+
+
         const permissionSU = [
             users.id,
             usersShow.id,
@@ -160,6 +242,21 @@ export class SeedService {
             realstateCreate.id,
             realstateUpdate.id,
             realstateDelete.id,
+            owners.id,
+            ownersShow.id,
+            ownersCreate.id,
+            ownersUpdate.id,
+            ownersDelete.id,
+            categories.id,
+            categoriesShow.id,
+            categoriesCreate.id,
+            categoriesUpdate.id,
+            categoriesDelete.id,
+            modalities.id,
+            modalitiesShow.id,
+            modalitiesCreate.id,
+            modalitiesUpdate.id,
+            modalitiesDelete.id,
         ]
 
         this.administradorSU = await this.roleService.create({
