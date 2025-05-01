@@ -1,10 +1,9 @@
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Column, Entity, OneToMany} from 'typeorm';
+import { BaseEntity } from '@/common/entities/base.entity';
 import { PropertyEntity } from '@/property/entities/property.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
 
-
-@Entity('categories')
-export class Category extends BaseEntity{
+@Entity({ name: 'categories' })
+export class CategoryEntity extends BaseEntity {
 
   @Column({ length: 100 })
   name: string;

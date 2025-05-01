@@ -14,6 +14,7 @@ import { RoleController } from './controllers/role.controller';
 import { PermissionController } from './controllers/permission.controller';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
+import { CustomerAuthService } from './services/customer-auth.service';
 import { RealstateModule } from '@/realstate/realstate.module';
 import { SectorsModule } from '@/sectors/sectors.module';
 import { OwnerEntity } from './entities/owner.entity';
@@ -21,6 +22,10 @@ import { OwnerController } from './controllers/owner.controller';
 import { OwnerService } from './services/owner.service';
 import { PropertyEntity } from '@/property/entities/property.entity';
 import { PropertyOwnerEntity } from '@/property/entities/property_owner.entity';
+import { ClientEntity } from './entities/client.entity';
+import { ClientService } from './services/client.service';
+import { ClientController } from './controllers/client.controller';
+import { HttpCustomService } from '@/providers/http/http.service';
 
 @Global()
 @Module({
@@ -31,6 +36,7 @@ import { PropertyOwnerEntity } from '@/property/entities/property_owner.entity';
       RoleEntity,
       UserEntity,
       OwnerEntity,
+      ClientEntity,
       PropertyEntity,
       PropertyOwnerEntity,
     ]),
@@ -44,14 +50,18 @@ import { PropertyOwnerEntity } from '@/property/entities/property_owner.entity';
     RoleController,
     UsersController,
     OwnerController,
+    ClientController,
   ],
   providers: [
     AuthService,
+    CustomerAuthService,
     PermissionService,
     PermissionRoleService,
     RoleService,
     UserService,
     OwnerService,
+    ClientService,
+    HttpCustomService,
   ],
   exports: [
     AuthService,
@@ -59,7 +69,9 @@ import { PropertyOwnerEntity } from '@/property/entities/property_owner.entity';
     PermissionRoleService,
     RoleService,
     UserService,
+    ClientService,
     TypeOrmModule,
   ],
 })
+
 export class UsersModule {}

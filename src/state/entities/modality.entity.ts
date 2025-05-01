@@ -1,12 +1,12 @@
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Column, Entity, OneToMany} from 'typeorm';
+import { BaseEntity } from '@/common/entities/base.entity';
 import { PropertyEntity } from '@/property/entities/property.entity';
+import { Entity, Column, OneToMany } from 'typeorm';
 
 @Entity('modalities')
-export class Modality extends BaseEntity{
+export class ModalityEntity extends BaseEntity {
   @Column({ length: 100 })
   name: string;
 
   @OneToMany( ()=> PropertyEntity, (property)=> property.modality)
-   propertys: PropertyEntity[];
+  propertys: PropertyEntity[];
 }
