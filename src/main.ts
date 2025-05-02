@@ -6,10 +6,6 @@ import { DocumentBuilder } from '@nestjs/swagger';
 import { CORS_OPTIONS } from './common/constants';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
-
-
-import { AppModule } from './app.module';
-import { CORS_OPTIONS } from './common/constants';
 import { LoggingInterceptor } from './common/logs/logs.interceptor';
 import { LogsService } from './common/logs/logs.service';
 import { UserService } from './users/services/users.service';
