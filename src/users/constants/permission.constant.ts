@@ -1,25 +1,25 @@
 export const PERMISSION_KEY = 'permissions';
 
 export enum PERMISSION {
-  // user
-  USER = 'Usuario',
-  USER_SHOW = 'Mostrar usuarios',
-  ROLE = 'Rol',
-  ROLE_SHOW = 'Mostrar roles',
-  PERMISSION = 'Permiso',
-  PERMISSION_SHOW = 'Mostrar permisos',
+    // user
+    USER = 'Usuario',
+    USER_SHOW = 'Mostrar usuarios',
+    ROLE = 'Rol',
+    ROLE_SHOW = 'Mostrar roles',
+    PERMISSION = 'Permiso',
+    PERMISSION_SHOW = 'Mostrar permisos',
 
-  // realstate
-  REALSTATE = 'Inmobiliaria',
-  REALSTATE_SHOW = 'Mostrar inmobiliarias',
-  REALSTATE_CREATE = 'Crear inmobiliarias',
-  REALSTATE_UPDATE = 'Actualizar inmobiliarias',
-  REALSTATE_DELETE = 'Eliminar inmobiliarias',
-  PROPERTY = 'Propiedad',
-  PROPERTY_SHOW = 'Mostrar propiedades',
-  PROPERTY_CREATE = 'Crear propiedades',
-  PROPERTY_UPDATE = 'Actualizar propiedades',
-  PROPERTY_DELETE = 'Eliminar propiedades',
+    // realstate
+    REALSTATE = 'Inmobiliaria',
+    REALSTATE_SHOW = 'Mostrar inmobiliarias',
+    REALSTATE_CREATE = 'Crear inmobiliarias',
+    REALSTATE_UPDATE = 'Actualizar inmobiliarias',
+    REALSTATE_DELETE = 'Eliminar inmobiliarias',
+    PROPERTY = 'Propiedad',
+    PROPERTY_SHOW = 'Mostrar propiedades',
+    PROPERTY_CREATE = 'Crear propiedades',
+    PROPERTY_UPDATE = 'Actualizar propiedades',
+    PROPERTY_DELETE = 'Eliminar propiedades',
 
   // Sectores
   SECTOR = 'Sector',
@@ -54,4 +54,7 @@ export enum PERMISSION {
   LOG = 'Bitacora',
   LOG_SHOW = 'Mostrar bitacora',
 
+    // Cliente
+    CLIENT = 'Cliente',
+    CLIENT_SHOW = 'Mostrar clientes',
 }
