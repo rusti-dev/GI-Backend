@@ -1,8 +1,8 @@
 import { BaseEntity } from 'src/common/entities/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne} from 'typeorm';
 import { UserEntity } from '@/users/entities/user.entity';
-import { Category} from '@/state/entities/category.entity';
-import { Modality } from '@/state/entities/modality.entity'; 
+import { CategoryEntity} from '@/state/entities/category.entity';
+import { ModalityEntity } from '@/state/entities/modality.entity'; 
 import { PropertyOwnerEntity } from './property_owner.entity';
 import { UbicacionEntity } from './ubicacion.entity';
 import { ImagenEntity } from './imagen.entity';
@@ -43,11 +43,11 @@ export class PropertyEntity extends BaseEntity {
  @ManyToOne( ()=>UserEntity, (user) => user.propertys,{onDelete: 'CASCADE', nullable: true})
   user: UserEntity;
   
- @ManyToOne( ()=>Category, (category) => category.propertys,{onDelete: 'CASCADE'})
- category: Category;
+ @ManyToOne( ()=>CategoryEntity, (category) => category.propertys,{onDelete: 'CASCADE'})
+ category: CategoryEntity;
  
- @ManyToOne(()=>Modality, (modality)=> modality.propertys,{onDelete: 'CASCADE'})
-  modality: Modality;
+ @ManyToOne(()=>ModalityEntity, (modality)=> modality.propertys,{onDelete: 'CASCADE'})
+  modality: ModalityEntity;
 
  @ManyToOne( ()=>SectorEntity, (sector)=> sector.propertys,{onDelete: 'CASCADE'})
  sector: SectorEntity; 
