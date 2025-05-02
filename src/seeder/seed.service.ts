@@ -208,6 +208,17 @@ export class SeedService {
             type: PermissionType.USERS,
         });
 
+        // Añadir permisos de LOG después de modalidades
+        const log = await this.permissionService.create({
+            name: PERMISSION.LOG,
+            description: 'Permite gestionar bitácora',
+            type: PermissionType.USERS,
+        });
+        const logShow = await this.permissionService.create({
+            name: PERMISSION.LOG_SHOW,
+            description: 'Permite ver bitácora',
+            type: PermissionType.USERS,
+        });
 
         const permissionSU = [
             users.id,
@@ -225,6 +236,23 @@ export class SeedService {
             realstateCreate.id,
             realstateUpdate.id,
             realstateDelete.id,
+            owners.id,
+            ownersShow.id,
+            ownersCreate.id,
+            ownersUpdate.id,
+            ownersDelete.id,
+            categories.id,
+            categoriesShow.id,
+            categoriesCreate.id,
+            categoriesUpdate.id,
+            categoriesDelete.id,
+            modalities.id,
+            modalitiesShow.id,
+            modalitiesCreate.id,
+            modalitiesUpdate.id,
+            modalitiesDelete.id,
+            log.id,
+            logShow.id
         ];
 
         const permissionUser = [

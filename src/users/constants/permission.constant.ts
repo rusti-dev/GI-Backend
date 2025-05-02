@@ -21,28 +21,37 @@ export enum PERMISSION {
   PROPERTY_UPDATE = 'Actualizar propiedades',
   PROPERTY_DELETE = 'Eliminar propiedades',
 
+  // Sectores
   SECTOR = 'Sector',
   SECTOR_SHOW = 'Mostrar sectores',
   SECTOR_CREATE = 'Crear sectores',
   SECTOR_UPDATE = 'Actualizar sectores',
   SECTOR_DELETE = 'Eliminar sectores',
 
+
+  //permisos para owners
   OWNER = 'Propietario',
   OWNER_SHOW = 'Mostrar propietarios',
   OWNER_CREATE = 'Crear propietarios',
   OWNER_UPDATE = 'Actualizar propietarios',
   OWNER_DELETE = 'Eliminar propietarios',
 
+  // Permiso para categorias
   CATEGORY = 'Categoría',
   CATEGORY_SHOW = 'Mostrar categorías',
   CATEGORY_CREATE = 'Crear categorías',
   CATEGORY_UPDATE = 'Actualizar categorías',
   CATEGORY_DELETE = 'Eliminar categorías',
 
+  //Permiso para modalidad
   MODALITY = 'Modalidad',
   MODALITY_SHOW = 'Mostrar modalidades',
   MODALITY_CREATE = 'Crear modalidades',
   MODALITY_UPDATE = 'Actualizar modalidades',
   MODALITY_DELETE = 'Eliminar modalidades',
+
+  //permiso para Bitacora
+  LOG = 'Bitacora',
+  LOG_SHOW = 'Mostrar bitacora',
 
 }

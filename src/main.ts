@@ -7,6 +7,11 @@ import * as morgan from 'morgan';
 
 import { AppModule } from './app.module';
 import { CORS_OPTIONS } from './common/constants';
+import { LoggingInterceptor } from './common/logs/logs.interceptor';
+import { LogsService } from './common/logs/logs.service';
+import { UserService } from './users/services/users.service';
+
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,7 +28,13 @@ async function bootstrap() {
   );
   // useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const reflector = app.get('Reflector');
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector)); // Enable transformation
+  const logsService = app.get(LogsService);
+  const userService = app.get(UserService);
+  
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(reflector),
+    new LoggingInterceptor(logsService, userService)
+  ); // Enable transformation
 
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
