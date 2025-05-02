@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '@/common/entities/base.entity';
 import { RealStateEntity } from '@/realstate/entities/realstate.entity';
 import { UserEntity } from '@/users/entities/user.entity';
+import { PropertyEntity } from '@/property/entities/property.entity';
 
 @Entity({ name: 'sector' })
 export class SectorEntity extends BaseEntity {
@@ -19,4 +20,7 @@ export class SectorEntity extends BaseEntity {
 
     @OneToMany(() => UserEntity, (user) => user.sector)
     users: UserEntity[];
+
+    @OneToMany( () => PropertyEntity, (property)=> property.sector)
+    propertys: PropertyEntity[];
 }
