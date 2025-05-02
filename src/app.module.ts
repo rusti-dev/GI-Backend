@@ -10,6 +10,7 @@ import { RealstateModule } from './realstate/realstate.module';
 import { SectorsModule } from './sectors/sectors.module';
 import {StateModule} from './state/state.module';
 // import { RealstateModule } from './realstate/realstate.module';
+import { PropertyModule } from './property/property.module';
 
 
 
@@ -23,6 +24,7 @@ import {StateModule} from './state/state.module';
         RealstateModule,
         SectorsModule,
         SeederModule,
+        PropertyModule,
         StateModule,
     ]
 })

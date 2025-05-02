@@ -1,10 +1,11 @@
 import { RoleEntity } from './role.entity';
 import { Exclude } from 'class-transformer';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { GENDER } from 'src/common/constants/gender';
 import { IUser } from '../interfaces/user.interface';
 import { BaseEntity } from 'src/common/entities/base.entity';
 import { SectorEntity } from '@/sectors/entities/sector.entity';
+import { PropertyEntity } from '@/property/entities/property.entity';
 
 
 
@@ -39,4 +40,7 @@ export class UserEntity extends BaseEntity implements IUser {
   
     @ManyToOne(() => SectorEntity, (sector) => sector.users, { onDelete: 'CASCADE', nullable: true })
     sector?: SectorEntity
+
+    @OneToMany(() => PropertyEntity, (property) => property.user)
+    propertys: PropertyEntity[];
 }

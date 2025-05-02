@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { PermissionGuard } from "../guards/permission.guard";
 import { AuthGuard } from "../guards/auth.guard";
@@ -18,7 +18,7 @@ import { UpdateOwnerDto } from "../dto/update-owner.dto";
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
-  @PermissionAccess(PERMISSION.OWNER, PERMISSION.OWNER_CREATE)
+ @PermissionAccess(PERMISSION.OWNER, PERMISSION.OWNER_CREATE)
   @Post()
   public async create(@Body() createOwnerDto: CreateOwnerDto): Promise<ResponseMessage> {
     return {
@@ -55,7 +55,7 @@ export class OwnerController {
 
   @PermissionAccess(PERMISSION.OWNER, PERMISSION.OWNER_UPDATE)
   @ApiParam({ name: 'ownerId', type: 'string' })
-  @Post(':ownerId')
+  @Patch(':ownerId')
   public async update(
     @Param('ownerId', ParseUUIDPipe) ownerId: string,
     @Body() updateOwnerDto: UpdateOwnerDto,
