@@ -27,6 +27,8 @@ import { ClientService } from './services/client.service';
 import { ClientController } from './controllers/client.controller';
 import { HttpCustomService } from '@/providers/http/http.service';
 
+
+
 @Global()
 @Module({
   imports: [

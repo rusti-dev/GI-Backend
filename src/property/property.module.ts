@@ -1,27 +1,31 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { PropertyService } from './services/property.service';
-import { PropertyController } from './controllers/property.controller';
-import { PropertyEntity } from './entities/property.entity';
-import { UbicacionService } from './services/ubicacion.service';
-import { UbicacionController } from './controllers/ubicacion.controller';
-import { UbicacionEntity } from './entities/ubicacion.entity';
-import { SectorsModule } from '@/sectors/sectors.module'; 
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from '@/users/users.module';
 import { StateModule } from '@/state/state.module';
+import { ImagenEntity } from './entities/imagen.entity';
+import { SectorsModule } from '@/sectors/sectors.module'; 
+import { ImagesService } from './services/image.service';
+import { PropertyEntity } from './entities/property.entity';
+import { PropertyService } from './services/property.service';
+import { UbicacionEntity } from './entities/ubicacion.entity';
+import { UbicacionService } from './services/ubicacion.service';
+import { ImagesController } from './controllers/image.controller';
+import { PropertyController } from './controllers/property.controller';
+import { UbicacionController } from './controllers/ubicacion.controller';
+
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PropertyEntity,UbicacionEntity]),
-   UsersModule,
-   SectorsModule,
-   StateModule,
-   ConfigModule
-  ],
-
-  controllers: [PropertyController, UbicacionController],
-  providers: [PropertyService, UbicacionService],
-  exports: [PropertyService, UbicacionService,TypeOrmModule],
+    imports: [TypeOrmModule.forFeature([PropertyEntity, UbicacionEntity, ImagenEntity]),
+        UsersModule,
+        SectorsModule,
+        StateModule,
+        ConfigModule
+    ],
+    controllers: [PropertyController, UbicacionController, ImagesController],
+    providers: [PropertyService, UbicacionService, ImagesService],
+    exports: [PropertyService, UbicacionService,TypeOrmModule, ImagesService],
 })
+
 export class PropertyModule {}
