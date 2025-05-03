@@ -28,7 +28,7 @@ export class UserEntity extends BaseEntity implements IUser {
     phone: string;
   
     @Column({
-      type: 'enum', enum: GENDER, nullable: true, default: GENDER.OTHER
+        type: 'enum', enum: GENDER, nullable: true, default: GENDER.OTHER
     })
     gender: GENDER;
   

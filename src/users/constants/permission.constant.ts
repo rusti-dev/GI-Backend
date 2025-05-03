@@ -48,4 +48,8 @@ export enum PERMISSION {
     // Cliente
     CLIENT = 'Cliente',
     CLIENT_SHOW = 'Mostrar clientes',
+
+    // Image
+    IMAGE = 'Imagen',
+    IMAGE_SHOW = 'Mostrar imagenes',
 }
