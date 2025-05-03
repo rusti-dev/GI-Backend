@@ -21,4 +21,7 @@ export class ClientEntity extends BaseEntity {
 
     @Column({ type: 'varchar', nullable: true, length: 15 })
     phone: string;
+
+    @Column({ type: 'boolean', nullable: true, default: true })
+    isActive: boolean;
 }
