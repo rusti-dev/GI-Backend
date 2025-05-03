@@ -91,5 +91,5 @@ export class AuthController {
     };
   }
 
-  // Futuro: forgot-password, reset-password
+  // To do: forgot-password, reset-password
 }

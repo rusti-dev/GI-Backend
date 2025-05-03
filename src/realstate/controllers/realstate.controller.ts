@@ -52,8 +52,8 @@ export class RealStateController {
       data: await this.realStateService.create(createRealStateDto),
     };
   }
-  @UseGuards(AuthGuard, PermissionGuard)
-  @ApiBearerAuth()
+  // @UseGuards(AuthGuard, PermissionGuard)
+  // @ApiBearerAuth()
   @PermissionAccess(PERMISSION.REALSTATE, PERMISSION.REALSTATE_SHOW)
   @ApiQuery({ name: 'limit', type: 'number', required: false })
   @ApiQuery({ name: 'offset', type: 'number', required: false })
