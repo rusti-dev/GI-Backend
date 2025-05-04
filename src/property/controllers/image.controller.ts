@@ -1,5 +1,5 @@
-import { AuthGuard } from '@nestjs/passport';
 import { ORDER_ENUM } from '@/common/constants';
+import { AuthGuard } from '@/users/guards/auth.guard';
 import { CreateImageDto, UpdateImageDto } from '../dto';
 import { ImagesService } from '../services/image.service';
 import { PermissionGuard } from '@/users/guards/permission.guard';
