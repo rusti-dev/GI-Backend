@@ -9,6 +9,7 @@ import { ResponseMessage, ResponseGet } from 'src/common/interfaces';
 import { handlerError } from 'src/common/utils/handlerError.utils';
 import { RealStateService } from '@/realstate/services/realstate.service';
 
+
 @Injectable()
 export class SectorsService {
     private readonly logger = new Logger('SectorsService');

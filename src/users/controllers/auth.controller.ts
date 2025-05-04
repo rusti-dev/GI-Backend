@@ -4,10 +4,11 @@ import { RegisterUserDto } from '../dto/create-user.dto';
 import { ResponseMessage } from '../../common/interfaces';
 import { AuthCustomerDto } from '../dto/auth-customer.dto';
 import { CreateCustomerDto } from '../dto/create-customer.dto';
-import { ApiQuery, ApiTags } from '@nestjs/swagger/dist/decorators';
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, UseGuards  } from '@nestjs/common';
+import { ApiQuery, ApiTags, ApiBearerAuth  } from '@nestjs/swagger/dist/decorators';
+import { Request } from 'express';
+import { AuthGuard } from '../guards/auth.guard';
 import { CustomerAuthService } from '../services/customer-auth.service';
-
 
 
 @ApiTags('Auth')
@@ -36,13 +37,25 @@ export class AuthController {
         };
     }
 
-    @Post('google/login')
-    public async googleLogin(@Body('token') token: string): Promise<ResponseMessage> {
-        return {
-            statusCode: 200,
-            data: await this.authService.googleLogin(token),
-        };
-    }
+  @Post('google/login')
+  public async googleLogin(@Body('token') token: string): Promise<ResponseMessage> {
+    return {
+      statusCode: 200,
+      data: await this.authService.googleLogin(token),
+    };
+  }
+
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Post('logout')
+  public async logout(@Req() request: Request): Promise<ResponseMessage> {
+    // No es necesario invalidar el token en el backend si usamos JWT,
+    // pero podríamos implementar una blacklist de tokens si fuera necesario
+    return {
+      statusCode: 200,
+      message: 'Sesión cerrada correctamente'
+    };
+  }
 
     @Post('customer/login')
     public async customerLogin(@Body() authDto: AuthCustomerDto): Promise<ResponseMessage> {
@@ -78,5 +91,5 @@ export class AuthController {
         };
     }
 
-  // Futuro: forgot-password, reset-password
+  // To do: forgot-password, reset-password
 }
