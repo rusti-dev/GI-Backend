@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { IsArray, IsEmail, IsNotEmpty, IsString, IsUUID, MaxLength, MinLength } from "class-validator";
 
 export class CreateOwnerDto {
   @ApiProperty({
@@ -32,4 +32,15 @@ export class CreateOwnerDto {
   })
   @IsNotEmpty() @IsString() @MinLength(6) @MaxLength(20)
   phone: string;
+
+    @ApiProperty({
+      example: '["ID1", "ID2"]',
+      type: [String],
+      description: 'Array de los ids de property',
+    })
+    @IsNotEmpty()
+    @IsString({ each: true })
+    @IsArray()
+    @IsUUID("4", { each: true })
+    property: string[];  
 }

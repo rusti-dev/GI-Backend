@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CategoryService } from '../services/category.service';
 import { CreateCategoryDto } from '../dto/create-category.dto';
@@ -7,6 +16,7 @@ import { AuthGuard } from '../../users/guards/auth.guard';
 import { PermissionGuard } from '../../users/guards/permission.guard';
 import { PermissionAccess } from '../../users/decorators/permissions.decorator';
 import { PERMISSION } from '../../users/constants/permission.constant';
+import { ResponseMessage } from '@/common/interfaces';
 
 @ApiTags('Categories')
 @ApiBearerAuth()
@@ -17,31 +27,55 @@ export class CategoryController {
 
   @PermissionAccess(PERMISSION.CATEGORY, PERMISSION.CATEGORY_CREATE)
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.create(createCategoryDto);
+  async create(
+    @Body() createCategoryDto: CreateCategoryDto,
+  ): Promise<ResponseMessage> {
+    return {
+      statusCode: 201,
+      data: await this.categoryService.create(createCategoryDto),
+    };
   }
 
   @PermissionAccess(PERMISSION.CATEGORY, PERMISSION.CATEGORY_SHOW)
   @Get()
-  findAll() {
-    return this.categoryService.findAll();
+  async findAll(): Promise<ResponseMessage> {
+    const categories = await this.categoryService.findAll();
+    return {
+      statusCode: 200,
+      data: categories,
+    };
   }
 
   @PermissionAccess(PERMISSION.CATEGORY, PERMISSION.CATEGORY_SHOW)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<ResponseMessage> {
+    const category = await this.categoryService.findOne(id);
+    return {
+      statusCode: 200,
+      data: category,
+    };
   }
 
   @PermissionAccess(PERMISSION.CATEGORY, PERMISSION.CATEGORY_UPDATE)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
-    return this.categoryService.update(id, updateCategoryDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ): Promise<ResponseMessage> {
+    const updated = await this.categoryService.update(id, updateCategoryDto);
+    return {
+      statusCode: 200,
+      data: updated,
+    };
   }
 
   @PermissionAccess(PERMISSION.CATEGORY, PERMISSION.CATEGORY_DELETE)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.categoryService.remove(id);
+  async remove(@Param('id') id: string): Promise<ResponseMessage> {
+    await this.categoryService.remove(id);
+    return {
+      statusCode: 200,
+      message: 'Categoría eliminada correctamente',
+    };
   }
 }
