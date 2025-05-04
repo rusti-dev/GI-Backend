@@ -20,9 +20,9 @@ export const DataSourceConfig: DataSourceOptions = {
   namingStrategy: new SnakeNamingStrategy(),
   logging: false,
   // esto no debe estar comentado cuando se ejecuta el backend
-  extra: {
+  /*extra: {
     ssl: configService.get('APP_PROD') === 'true' ? { rejectUnauthorized: false } : { rejectUnauthorized: false }
-  }
+  }*/
 };
 
 export const AppDS = new DataSource(DataSourceConfig);
