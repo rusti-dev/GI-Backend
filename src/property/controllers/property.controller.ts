@@ -10,22 +10,26 @@ import { PermissionGuard } from 'src/users/guards/permission.guard';
 import { PermissionAccess } from 'src/users/decorators/permissions.decorator';
 import { PERMISSION } from 'src/users/constants/permission.constant';
 import { ORDER_ENUM } from 'src/common/constants';
+import { UniversalAuthGuard } from '@/users/guards/universal-auth.guard';
 
 @ApiTags('Property')
-//@UseGuards(AuthGuard, PermissionGuard)
-//@ApiBearerAuth()
+
 @Controller('property')
 export class PropertyController {
-  constructor(private readonly propertyService: PropertyService) {}
+  constructor(private readonly propertyService: PropertyService) { }
 
- // @PermissionAccess(PERMISSION.SECTOR)
+  @UseGuards(AuthGuard, PermissionGuard)
+  @ApiBearerAuth()
+  @PermissionAccess(PERMISSION.SECTOR)
   @Post()
-  public async create(@Body() createPropertyDto: CreatePropertyDto): Promise<ResponseMessage>{
-    return{
+  public async create(@Body() createPropertyDto: CreatePropertyDto): Promise<ResponseMessage> {
+    return {
       statusCode: 201,
       data: await this.propertyService.create(createPropertyDto),
     };
   }
+  @UseGuards(UniversalAuthGuard)
+  @ApiBearerAuth()
   //@PermissionAccess(PERMISSION.SECTOR, PERMISSION.PROPERTY_SHOW)
   @ApiQuery({ name: 'limit', type: 'number', required: false })
   @ApiQuery({ name: 'offset', type: 'number', required: false })
@@ -34,7 +38,7 @@ export class PropertyController {
   @ApiQuery({ name: 'value', type: 'string', required: false })
   @Get()
   public async findAll(@Query() queryDto: QueryDto): Promise<ResponseMessage> {
-   const { countData, data} = await this.propertyService.findAll(queryDto);
+    const { countData, data } = await this.propertyService.findAll(queryDto);
     return {
       statusCode: 200,
       data,
@@ -42,30 +46,36 @@ export class PropertyController {
     };
   }
 
-  //@PermissionAccess(PERMISSION.SECTOR, PERMISSION.PROPERTY_SHOW)
-  @ApiParam({ name: 'propertyId', type: 'string'})
+  @UseGuards(AuthGuard, PermissionGuard)
+  @ApiBearerAuth()
+  @PermissionAccess(PERMISSION.SECTOR, PERMISSION.PROPERTY_SHOW)
+  @ApiParam({ name: 'propertyId', type: 'string' })
   @Get(':propertyId')
   public async findOne(@Param('propertyId', ParseUUIDPipe) propertyId: string): Promise<ResponseMessage> {
     return {
-      statusCode: 200, 
+      statusCode: 200,
       data: await this.propertyService.findOne(propertyId),
     };
   }
 
+  @UseGuards(AuthGuard, PermissionGuard)
+  @ApiBearerAuth()
   //@PermissionAccess(PERMISSION.PROPERTY)
   @ApiParam({ name: 'propertyId', type: 'string' })
   @Patch(':propertyId')
-  public async update(@Param('propertyId',ParseUUIDPipe) propertyId: string, @Body() updatePropertyDto: UpdatePropertyDto): Promise<ResponseMessage> {
-   return{ 
-    statusCode: 200, 
-    data: await this.propertyService.update(propertyId,updatePropertyDto),
-   };
+  public async update(@Param('propertyId', ParseUUIDPipe) propertyId: string, @Body() updatePropertyDto: UpdatePropertyDto): Promise<ResponseMessage> {
+    return {
+      statusCode: 200,
+      data: await this.propertyService.update(propertyId, updatePropertyDto),
+    };
   }
 
-  //@PermissionAccess(PERMISSION.PROPERTY)
+  @UseGuards(AuthGuard, PermissionGuard)
+  @ApiBearerAuth()
+  @PermissionAccess(PERMISSION.PROPERTY)
   @ApiParam({ name: 'propertyId', type: 'string' })
   @Delete(':propertyId')
-  public async delete(@Param('propertyId',ParseUUIDPipe) propertyId: string):Promise<ResponseMessage> {
+  public async delete(@Param('propertyId', ParseUUIDPipe) propertyId: string): Promise<ResponseMessage> {
     return await this.propertyService.delete(propertyId);
   }
 }

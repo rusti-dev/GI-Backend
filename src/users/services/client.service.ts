@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientEntity } from '../entities/client.entity';
 import { CreateClientDto, UpdateClientDto } from '../dto';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 
@@ -35,6 +35,17 @@ export class ClientService {
         const client = await this.clientRepository.findOne({ where: { id } });
         if (!client) {
             throw new NotFoundException('Client not found');
+        }
+        return client;
+    }
+
+    // Dentro de client.service.ts
+    async findOneAuth(id: string): Promise<ClientEntity> {
+        const client = await this.clientRepository.findOne({
+            where: { id, isActive: true },
+        });
+        if (!client) {
+            throw new UnauthorizedException('Cliente no encontrado o inactivo');
         }
         return client;
     }
