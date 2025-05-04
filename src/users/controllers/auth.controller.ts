@@ -6,7 +6,6 @@ import { AuthCustomerDto } from '../dto/auth-customer.dto';
 import { CreateCustomerDto } from '../dto/create-customer.dto';
 import { Body, Controller, Get, Post, Query, Req, UseGuards  } from '@nestjs/common';
 import { ApiQuery, ApiTags, ApiBearerAuth  } from '@nestjs/swagger/dist/decorators';
-// import { AuthCustomerDto } from '../dto/auth-customer.dto';
 import { Request } from 'express';
 import { AuthGuard } from '../guards/auth.guard';
 import { CustomerAuthService } from '../services/customer-auth.service';
