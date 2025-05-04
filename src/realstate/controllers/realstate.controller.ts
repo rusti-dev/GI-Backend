@@ -29,6 +29,7 @@ import { GetUser } from '@/users/decorators/get-user.decorator';
 import { Request, Response } from 'express';
 import axios from 'axios';
 import { SubscriptionService } from '../services/subscription.service';
+import { UniversalAuthGuard } from '@/users/guards/universal-auth.guard';
 
 @ApiTags('Realstate')
 @Controller('realstate')
@@ -52,8 +53,8 @@ export class RealStateController {
       data: await this.realStateService.create(createRealStateDto),
     };
   }
-  //@UseGuards(AuthGuard)
-  //@ApiBearerAuth()
+  @UseGuards(UniversalAuthGuard)
+  @ApiBearerAuth()
   //@PermissionAccess(PERMISSION.REALSTATE, PERMISSION.REALSTATE_SHOW)
   @ApiQuery({ name: 'limit', type: 'number', required: false })
   @ApiQuery({ name: 'offset', type: 'number', required: false })

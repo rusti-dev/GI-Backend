@@ -66,6 +66,7 @@ export class AuthService {
         const payload: IPayload = {
             sub: userLogged.id,
             role: userLogged.role.id,
+            type: 'user',
         };
         const accessToken = this.singJWT({
             payload,
