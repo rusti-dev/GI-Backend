@@ -1,0 +1,30 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\aticl\\OneDrive\\Documentos\\sistemas-informacion-ii\\GI-GestionInmobiliaria\\GI-Backend\\logs\\.278aaf623402093a2dbb23d699e7017d05d5c7f8-audit.json",
+    "files": [
+        {
+            "date": 1746131578197,
+            "name": "C:\\Users\\aticl\\OneDrive\\Documentos\\sistemas-informacion-ii\\GI-GestionInmobiliaria\\GI-Backend\\logs\\application-2025-05-01.log",
+            "hash": "99725625dcf27e7a7141a4d62dfb79dd6f2b9cef469c53f964f22a9f5b7e20fa"
+        },
+        {
+            "date": 1746189097964,
+            "name": "C:\\Users\\aticl\\OneDrive\\Documentos\\sistemas-informacion-ii\\GI-GestionInmobiliaria\\GI-Backend\\logs\\application-2025-05-02.log",
+            "hash": "2ee2aecc74d77a46ae6c1ee9f587f66e26fb3161aa73c867862e9bdc22c9c116"
+        },
+        {
+            "date": 1746244810967,
+            "name": "C:\\Users\\aticl\\OneDrive\\Documentos\\sistemas-informacion-ii\\GI-GestionInmobiliaria\\GI-Backend\\logs\\application-2025-05-03.log",
+            "hash": "916a45c160fe89c637ad57de6de46687e919851a6daa6ab29ef58b590a2c2d22"
+        },
+        {
+            "date": 1746361612278,
+            "name": "C:\\Users\\aticl\\OneDrive\\Documentos\\sistemas-informacion-ii\\GI-GestionInmobiliaria\\GI-Backend\\logs\\application-2025-05-04.log",
+            "hash": "b664820defc6fb8d84372e930509846d5771b3de81bd71640d0c613a65d17ad3"
+        }
+    ],
+    "hashType": "sha256"
+}
