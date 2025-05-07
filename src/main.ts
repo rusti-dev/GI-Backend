@@ -6,8 +6,8 @@ import { DocumentBuilder } from '@nestjs/swagger';
 import { CORS_OPTIONS } from './common/constants';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
-// import { LoggingInterceptor } from './common/logs/logs.interceptor';
-// import { LogsService } from './common/logs/logs.service';
+import { LoggingInterceptor } from './common/logs/logs.interceptor';
+import { LogsService } from './common/logs/logs.service';
 import { UserService } from './users/services/users.service';
 
 
@@ -27,12 +27,12 @@ async function bootstrap() {
   );
   // useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const reflector = app.get('Reflector');
-  // const logsService = app.get(LogsService);
+  const logsService = app.get(LogsService);
   const userService = app.get(UserService);
   
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(reflector),
-    // new LoggingInterceptor(logsService, userService)
+    new LoggingInterceptor(logsService, userService)
   ); // Enable transformation
 
     const configService = app.get(ConfigService);
