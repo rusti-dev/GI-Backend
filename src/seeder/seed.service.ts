@@ -127,6 +127,13 @@ export class SeedService {
             type: PermissionType.USERS,
         });
 
+        // subscription
+        const subscription = await this.permissionService.create({
+            name: PERMISSION.SUBSCRIPTION,
+            description: 'permite gestionar suscripciones',
+            type: PermissionType.USERS,
+        });
+
         // owners
         const owners = await this.permissionService.create({
             name: PERMISSION.OWNER,
@@ -221,36 +228,11 @@ export class SeedService {
         });
 
         const permissionSU = [
-            users.id,
-            usersShow.id,
-            roles.id,
-            rolesShow.id,
-            permissions.id,
-            permissionsShow.id,
-            sectors.id,
-            sectorsShow.id,
-            sectorsCreate.id,
-            sectorsUpdate.id,
             realstate.id,
             realstateShow.id,
             realstateCreate.id,
             realstateUpdate.id,
             realstateDelete.id,
-            owners.id,
-            ownersShow.id,
-            ownersCreate.id,
-            ownersUpdate.id,
-            ownersDelete.id,
-            categories.id,
-            categoriesShow.id,
-            categoriesCreate.id,
-            categoriesUpdate.id,
-            categoriesDelete.id,
-            modalities.id,
-            modalitiesShow.id,
-            modalitiesCreate.id,
-            modalitiesUpdate.id,
-            modalitiesDelete.id,
             log.id,
             logShow.id
         ];
@@ -270,6 +252,7 @@ export class SeedService {
             realstateCreate.id,
             realstateUpdate.id,
             realstateDelete.id,
+            subscription.id,
             owners.id,
             ownersShow.id,
             ownersCreate.id,
@@ -306,7 +289,7 @@ export class SeedService {
             }
             const userSU: CreateUserDto = {
                 name: 'Administrador SU',
-                email: 'adminTI@gmail.com',
+                email: 'adminSU@gmail.com',
                 password: '12345678',
                 role: this.administradorSU.id,
                 ci: 12345678,
