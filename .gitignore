@@ -3,6 +3,7 @@
 /node_modules
 /build
 postgres
+/temp
 
 # Logs Los logs se estan filtrando en .gitignore. Es necesario para entender mejor
 

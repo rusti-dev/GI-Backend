@@ -23,9 +23,9 @@ import { ProvidersModule } from './providers/providers.module';
         UsersModule,
         RealstateModule,
         SectorsModule,
-        SeederModule,
         PropertyModule,
         StateModule,
+        SeederModule,
     ]
 })
 

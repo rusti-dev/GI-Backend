@@ -19,7 +19,7 @@ export const DataSourceConfig: DataSourceOptions = {
   synchronize: true,
   namingStrategy: new SnakeNamingStrategy(),
   logging: false,
-  // esto no debe estar comentado cuando se ejecuta el backend
+
   extra: {
     ssl: configService.get('APP_PROD') === 'true' ? { rejectUnauthorized: false } : { rejectUnauthorized: false }
   }
