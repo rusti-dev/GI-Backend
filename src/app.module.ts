@@ -11,7 +11,6 @@ import { PropertyModule } from './property/property.module';
 import { RealstateModule } from './realstate/realstate.module';
 import { ProvidersModule } from './providers/providers.module';
 
-// import { RealstateModule } from './realstate/realstate.module';
 
 
 @Module({
