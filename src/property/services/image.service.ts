@@ -28,6 +28,18 @@ export class ImagesService {
         return this.imageRepository.save(image);
     }
 
+    public async uploadImage(file: Express.Multer.File, propertyId: string): Promise<ImagenEntity> {
+        const property = await this.propertyService.findOne(propertyId);
+        if (!property) throw new NotFoundException('Property not found');
+
+        const image = this.imageRepository.create({
+            url: file.path,
+            property,
+        });
+
+        return this.imageRepository.save(image);
+    }
+
     public async findAll(): Promise<ImagenEntity[]> {
         return this.imageRepository.find({ relations: ['property'] });
     }

@@ -9,6 +9,7 @@ import { ImagesService } from './services/image.service';
 import { PropertyEntity } from './entities/property.entity';
 import { PropertyService } from './services/property.service';
 import { UbicacionEntity } from './entities/ubicacion.entity';
+import { CloudinaryProvider } from '@/config/cloudinary.config';
 import { UbicacionService } from './services/ubicacion.service';
 import { ImagesController } from './controllers/image.controller';
 import { PropertyController } from './controllers/property.controller';
@@ -17,15 +18,24 @@ import { UbicacionController } from './controllers/ubicacion.controller';
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PropertyEntity, UbicacionEntity, ImagenEntity]),
+    imports: [
+        TypeOrmModule.forFeature([
+            PropertyEntity, UbicacionEntity, ImagenEntity
+        ]),
         UsersModule,
         SectorsModule,
         StateModule,
         ConfigModule
     ],
-    controllers: [PropertyController, UbicacionController, ImagesController],
-    providers: [PropertyService, UbicacionService, ImagesService],
-    exports: [PropertyService, UbicacionService,TypeOrmModule, ImagesService],
+    controllers: [
+        PropertyController, UbicacionController, ImagesController
+    ],
+    providers: [
+        PropertyService, UbicacionService, CloudinaryProvider, ImagesService
+    ],
+    exports: [
+        PropertyService, UbicacionService,TypeOrmModule, ImagesService
+    ],
 })
 
 export class PropertyModule {}
