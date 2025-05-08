@@ -15,6 +15,8 @@ import { CategoryService } from '@/state/services/category.service';
 import { ModalityService } from '@/state/services/modality.service';
 //y importar lo de  imagenes
 
+
+
 @Injectable()
 export class PropertyService {
   private readonly logger = new Logger('PropertyService');
@@ -81,7 +83,6 @@ export class PropertyService {
     }
   }
 
-
   public async findOne(id: string): Promise<PropertyEntity> {
     try {
       const property = await this.propertyRepository.findOne({
@@ -93,7 +94,7 @@ export class PropertyService {
           'sector',
           'imagenes',
           'ubicacion',
-          'propertys_duenos'],
+          'property_owner'], // esto se cambio
       });
 
       if (!property) {

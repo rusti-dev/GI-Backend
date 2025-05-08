@@ -19,13 +19,13 @@ import { Controller, Get, Post, Patch, Delete, Param, Body, ParseUUIDPipe, UseGu
 export class ImagesController {
     constructor(private readonly imagesService: ImagesService) {}
 
-    @PermissionAccess(PERMISSION.IMAGE)
+    // @PermissionAccess(PERMISSION.IMAGE)
     @Post()
     public async create(@Body() createImageDto: CreateImageDto) {
         return this.imagesService.create(createImageDto);
     }
 
-    @PermissionAccess(PERMISSION.IMAGE)
+    // @PermissionAccess(PERMISSION.IMAGE)
     @Post('upload')
     @UseInterceptors(FileInterceptor('file', { storage: cloudinaryStorage }))
     @ApiConsumes('multipart/form-data')
@@ -53,7 +53,7 @@ export class ImagesController {
         return this.imagesService.uploadImage(file, propertyId);
     }
 
-    @PermissionAccess(PERMISSION.IMAGE, PERMISSION.IMAGE_SHOW)
+    // @PermissionAccess(PERMISSION.IMAGE, PERMISSION.IMAGE_SHOW)
     @ApiQuery({ name: 'limit', type: 'number', required: false })
     @ApiQuery({ name: 'offset', type: 'number', required: false })
     @ApiQuery({ name: 'order', enum: ORDER_ENUM, required: false })
@@ -64,14 +64,14 @@ export class ImagesController {
         return this.imagesService.findAll();
     }
 
-    @PermissionAccess(PERMISSION.IMAGE, PERMISSION.IMAGE_SHOW)
+    // @PermissionAccess(PERMISSION.IMAGE, PERMISSION.IMAGE_SHOW)
     @ApiParam({ name: 'id', type: 'string' })
     @Get(':id')
     public async findOne(@Param('id', ParseUUIDPipe) id: string) {
         return this.imagesService.findOne(id);
     }
 
-    @PermissionAccess(PERMISSION.IMAGE)
+    // @PermissionAccess(PERMISSION.IMAGE)
     @ApiParam({ name: 'id', type: 'string' })
     @Patch(':id')
     public async update(
@@ -81,7 +81,7 @@ export class ImagesController {
         return this.imagesService.update(id, updateImageDto);
     }
 
-    @PermissionAccess(PERMISSION.IMAGE)
+    // @PermissionAccess(PERMISSION.IMAGE)
     @ApiParam({ name: 'id', type: 'string' })
     @Delete(':id')
     public async remove(@Param('id', ParseUUIDPipe) id: string) {
