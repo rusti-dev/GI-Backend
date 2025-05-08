@@ -1,5 +1,5 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import { Controller, Get, Query, Res, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth, ApiQuery, ApiResponse } from '@nestjs/swagger';
 
 import { LogsService } from './logs.service';
 import { AuthGuard } from '../../users/guards/auth.guard';
@@ -7,6 +7,7 @@ import { ResponseMessage } from '../interfaces';
 import { PermissionAccess } from '../../users/decorators/permissions.decorator';
 import { PERMISSION } from '../../users/constants/permission.constant';
 import { PermissionGuard } from '../../users/guards/permission.guard';
+import { Response } from 'express';
 
 @ApiTags('Logs')
 @Controller('logs')
@@ -42,5 +43,104 @@ export class LogsController {
       data: logs,
       countData: totalLogs,
     };
+  }
+
+  // Ruta para generar y descargar el reporte en PDF de los logs
+  @Get('pdf')
+  @PermissionAccess(PERMISSION.LOG_SHOW)
+  @ApiQuery({ name: 'fromDate', required: false, type: String })
+  @ApiQuery({ name: 'toDate', required: false, type: String })
+  @ApiQuery({ name: 'columns', required: true, type: [String] }) // Las columnas seleccionadas para el reporte
+  @ApiQuery({ name: 'fileName', required: true, type: String }) // Nombre del archivo PDF
+  @ApiResponse({
+    status: 200,
+    description: 'Reporte PDF generado con éxito',
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Error al generar el reporte PDF',
+  })
+  async generatePDFReport(
+    @Res() res: Response,
+    @Query('columns') columns: string[], // Añadimos las columnas
+    @Query('fileName') fileName: string, // Si no se pasa, usamos un nombre predeterminado
+    @Query('fromDate') fromDate?: string,
+    @Query('toDate') toDate?: string,
+  ) {
+    try {
+      const filter = { fromDate, toDate, columns };
+      const pdfBuffer = await this.logsService.generateLogsPDFReport(filter);
+      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`); // Nombre del archivo PDF
+      res.setHeader('Content-Type', 'application/pdf');
+      res.end(pdfBuffer);
+    } catch (error) {
+      res.status(500).send({ message: 'Hubo un error al generar el reporte PDF', error: error.message });
+    }
+  }
+
+  // Ruta para generar y descargar el reporte en Excel de los logs
+  @Get('excel')
+  @PermissionAccess(PERMISSION.LOG_SHOW)
+  @ApiQuery({ name: 'fromDate', required: false, type: String })
+  @ApiQuery({ name: 'toDate', required: false, type: String })
+  @ApiQuery({ name: 'columns', required: true, type: [String] }) // Las columnas seleccionadas para el reporte
+  @ApiQuery({ name: 'fileName', required: true, type: String }) // Nombre del archivo Excel
+  @ApiResponse({
+    status: 200,
+    description: 'Reporte Excel generado con éxito',
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Error al generar el reporte Excel',
+  })
+  async generateExcelReport(
+    @Res() res: Response,
+    @Query('columns') columns: string[], // Añadimos las columnas
+    @Query('fileName') fileName: string, // Si no se pasa, usamos un nombre predeterminado
+    @Query('fromDate') fromDate?: string,
+    @Query('toDate') toDate?: string,
+  ) {
+    try {
+      const filter = { fromDate, toDate, columns };
+      const excelBuffer = await this.logsService.generateLogsExcelReport(filter);
+      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`); // Nombre del archivo Excel
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.end(excelBuffer);
+    } catch (error) {
+      res.status(500).send({ message: 'Hubo un error al generar el reporte Excel', error: error.message });
+    }
+  }
+
+  // Ruta para generar y enviar los reportes por correo
+  @Get('send')
+  @PermissionAccess(PERMISSION.LOG_SHOW)
+  @ApiQuery({ name: 'fromDate', required: false, type: String })
+  @ApiQuery({ name: 'toDate', required: false, type: String })
+  @ApiQuery({ name: 'email', required: true, type: String })
+  @ApiQuery({ name: 'fileName', required: true, type: String }) // Nombre del archivo enviado por correo
+  @ApiQuery({ name: 'columns', required: true, type: [String] }) // Las columnas seleccionadas para el reporte
+  @ApiResponse({
+    status: 200,
+    description: 'Reportes generados y enviados por correo con éxito',
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Error al generar o enviar los reportes por correo',
+  })
+  async generateAndSendReport(
+    @Query('email') email: string,
+    @Query('fileName') fileName: string, // Si no se pasa, usamos un nombre predeterminado
+    @Query('columns') columns: string[], // Añadimos las columnas
+    @Query('fromDate') fromDate?: string,
+    @Query('toDate') toDate?: string,
+  ) {
+    const filter = { fromDate, toDate, columns };
+
+    try {
+      await this.logsService.generateAndSendLogsReport(filter, email, fileName);
+      return { message: 'Reportes generados y enviados por correo con éxito' };
+    } catch (error) {
+      return { message: 'Hubo un error al generar o enviar los reportes', error: error.message };
+    }
   }
 } 
