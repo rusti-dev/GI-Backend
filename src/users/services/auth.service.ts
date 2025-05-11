@@ -16,6 +16,7 @@ import { IGenerateToken } from '../interfaces/generate-token.interface';
 import { CreateUserDto, RegisterUserDto } from '../dto/create-user.dto';
 import { RealStateService } from '@/realstate/services/realstate.service';
 import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { PermissionService } from './permission.service';
 
 
 
@@ -27,6 +28,7 @@ export class AuthService {
         private readonly userService: UserService,
         private readonly realStateService: RealStateService,
         private readonly sectorService: SectorsService,
+        private readonly permissionService: PermissionService,
         private readonly dataSources: DataSource,
         private readonly configService: ConfigService,
         private readonly roleService: RoleService,
@@ -66,6 +68,7 @@ export class AuthService {
         const payload: IPayload = {
             sub: userLogged.id,
             role: userLogged.role.id,
+            type: 'user',
         };
         const accessToken = this.singJWT({
             payload,
@@ -115,10 +118,12 @@ export class AuthService {
                     key: 'name',
                     value: 'basic',
                 });
+                console.log('findRole', findRole);
                 if (!findRole) {
+                    const permissionSupcription = await this.permissionService.findOneByName("Suscripcion");
                     const role = await this.roleService.create({
                         name: 'basic',
-                        permissions: [],
+                        permissions: [permissionSupcription.id],        
                     });
                     roleId = role.id;
                 } else {

@@ -127,6 +127,13 @@ export class SeedService {
             type: PermissionType.USERS,
         });
 
+        // subscription
+        const subscription = await this.permissionService.create({
+            name: PERMISSION.SUBSCRIPTION,
+            description: 'permite gestionar suscripciones',
+            type: PermissionType.USERS,
+        });
+
         // owners
         const owners = await this.permissionService.create({
             name: PERMISSION.OWNER,
@@ -208,23 +215,26 @@ export class SeedService {
             type: PermissionType.USERS,
         });
 
+        // Añadir permisos de LOG después de modalidades
+        const log = await this.permissionService.create({
+            name: PERMISSION.LOG,
+            description: 'Permite gestionar bitácora',
+            type: PermissionType.USERS,
+        });
+        const logShow = await this.permissionService.create({
+            name: PERMISSION.LOG_SHOW,
+            description: 'Permite ver bitácora',
+            type: PermissionType.USERS,
+        });
 
         const permissionSU = [
-            users.id,
-            usersShow.id,
-            roles.id,
-            rolesShow.id,
-            permissions.id,
-            permissionsShow.id,
-            sectors.id,
-            sectorsShow.id,
-            sectorsCreate.id,
-            sectorsUpdate.id,
             realstate.id,
             realstateShow.id,
             realstateCreate.id,
             realstateUpdate.id,
             realstateDelete.id,
+            log.id,
+            logShow.id
         ];
 
         const permissionUser = [
@@ -242,6 +252,7 @@ export class SeedService {
             realstateCreate.id,
             realstateUpdate.id,
             realstateDelete.id,
+            subscription.id,
             owners.id,
             ownersShow.id,
             ownersCreate.id,
@@ -278,7 +289,7 @@ export class SeedService {
             }
             const userSU: CreateUserDto = {
                 name: 'Administrador SU',
-                email: 'adminTI@gmail.com',
+                email: 'adminSU@gmail.com',
                 password: '12345678',
                 role: this.administradorSU.id,
                 ci: 12345678,
