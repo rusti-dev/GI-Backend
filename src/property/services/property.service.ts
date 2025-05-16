@@ -64,8 +64,12 @@ export class PropertyService {
       const { limit, offset, order, attr, value } = queryDto;
 
       const query = this.propertyRepository.createQueryBuilder('property')
-        .leftJoinAndSelect('property.sector', 'sector') 
- 
+        .leftJoinAndSelect('property.sector', 'sector')
+        .leftJoinAndSelect('property.ubicacion', 'ubicacion')
+        .leftJoinAndSelect('property.category', 'category')    
+        .leftJoinAndSelect('property.modality', 'modality')
+        .leftJoinAndSelect('sector.realState', 'realState');
+
       if (limit) query.take(limit);
       if (offset) query.skip(offset);
       if (order) query.orderBy('property.id', order.toUpperCase() as any);
