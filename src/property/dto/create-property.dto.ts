@@ -51,7 +51,7 @@ export class CreatePropertyDto {
         required: false,
     })
     @IsNumber()
-    @IsOptional()
+    @IsNotEmpty()
     NroHabitaciones: number;
   
     @ApiProperty({
@@ -61,7 +61,7 @@ export class CreatePropertyDto {
         required: false,
     })
     @IsNumber()
-    @IsOptional()
+    @IsNotEmpty()
     NroBanos: number;
    
     @ApiProperty({
@@ -71,8 +71,17 @@ export class CreatePropertyDto {
         required: false,
     })
     @IsNumber()
-    @IsOptional()
+    @IsNotEmpty()
     NroEstacionamientos: number;
+
+    @ApiProperty({
+        type: 'number',
+        description: 'comision por el inmueble',
+        example: 0.15,
+     })
+    @IsNumber()
+    @IsNotEmpty()
+    comision: number;
 
     @ApiProperty({example: 'ID',type: String,description: 'Id del usuario'})
     @IsString()

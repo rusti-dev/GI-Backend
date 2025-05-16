@@ -29,14 +29,17 @@ export class PropertyEntity extends BaseEntity {
     @Column({type:'decimal', nullable: false})
     area:number;
 
-    @Column({type:'int', nullable: true})
+    @Column({type:'int', nullable: false})
     NroHabitaciones:number;
 
-    @Column({type:'int', nullable: true})
+    @Column({type:'int', nullable: false})
     NroBanos:number;
     
-    @Column({ type: 'int',nullable: true})
+    @Column({ type: 'int',nullable: false})
     NroEstacionamientos:number;
+    
+    @Column({ type: 'decimal', nullable: false})
+    comision:number;
 
     // RELACIONES:
      
