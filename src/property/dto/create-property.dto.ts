@@ -83,6 +83,17 @@ export class CreatePropertyDto {
     @IsNotEmpty()
     comision: number;
 
+        @ApiProperty({ 
+        type: 'string',
+        description: 'condicion de compra que tiene un inmueble',
+        example:'no se aceptan mascotas, debe pagar en efectivo, precio debatible',
+    })
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(10)
+    condicion_Compra: string;
+
+
     @ApiProperty({example: 'ID',type: String,description: 'Id del usuario'})
     @IsString()
     @IsUUID()

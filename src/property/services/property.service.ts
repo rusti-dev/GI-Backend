@@ -91,7 +91,8 @@ export class PropertyService {
                     'sector',
                     'imagenes',
                     'ubicacion',
-                    'property_owner'], // esto se cambio, antes estaba 'property_owner' y daba error
+                    'property_owner',
+  'property_owner.owner'], // esto se cambio, antes estaba 'property_owner' y daba error
             });
           
             if (!property) {
