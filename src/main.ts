@@ -5,38 +5,38 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { CORS_OPTIONS } from './common/constants';
 import { SwaggerModule } from '@nestjs/swagger/dist';
-import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
-import { LoggingInterceptor } from './common/logs/logs.interceptor';
 import { LogsService } from './common/logs/logs.service';
 import { UserService } from './users/services/users.service';
+import { LoggingInterceptor } from './common/logs/logs.interceptor';
+import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
 
 
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
-  app.use(morgan('dev'));
-  app.setGlobalPrefix('api');
-  app.enableCors(CORS_OPTIONS);
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
-  );
-  // useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  const reflector = app.get('Reflector');
-  const logsService = app.get(LogsService);
-  const userService = app.get(UserService);
+    app.use(morgan('dev'));
+    app.setGlobalPrefix('api');
+    app.enableCors(CORS_OPTIONS);
+    app.useGlobalPipes(
+        new ValidationPipe({
+            transformOptions: {
+                enableImplicitConversion: true,
+            },
+        }),
+    );
+    // useContainer(app.select(AppModule), { fallbackOnErrors: true });
+    const reflector = app.get('Reflector');
+    const logsService = app.get(LogsService);
+    const userService = app.get(UserService);
   
-  app.useGlobalInterceptors(
-    new ClassSerializerInterceptor(reflector),
-    new LoggingInterceptor(logsService, userService)
-  ); // Enable transformation
+    app.useGlobalInterceptors(
+        new ClassSerializerInterceptor(reflector),
+        new LoggingInterceptor(logsService, userService)
+    ); // Enable transformation
 
     const configService = app.get(ConfigService);
-    const port = configService.get('PORT');
+    const port = configService.get('PORT');     // esta variable no se está usando
     const title: string = configService.get('APP_NAME');
     const url = configService.get('APP_URL');
 

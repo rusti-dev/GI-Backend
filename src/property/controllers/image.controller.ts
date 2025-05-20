@@ -2,11 +2,13 @@ import { ORDER_ENUM } from '@/common/constants';
 import { AuthGuard } from '@/users/guards/auth.guard';
 import { CreateImageDto, UpdateImageDto } from '../dto';
 import { ImagesService } from '../services/image.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { cloudinaryStorage } from '@/config/cloudinary.config';
 import { PermissionGuard } from '@/users/guards/permission.guard';
 import { PERMISSION } from '@/users/constants/permission.constant';
 import { PermissionAccess } from '@/users/decorators/permissions.decorator';
-import { ApiTags, ApiParam, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
-import { Controller, Get, Post, Patch, Delete, Param, Body, ParseUUIDPipe, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiParam, ApiBearerAuth, ApiQuery, ApiConsumes, ApiBody } from '@nestjs/swagger';
+import { Controller, Get, Post, Patch, Delete, Param, Body, ParseUUIDPipe, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
 
 
 
@@ -17,13 +19,41 @@ import { Controller, Get, Post, Patch, Delete, Param, Body, ParseUUIDPipe, UseGu
 export class ImagesController {
     constructor(private readonly imagesService: ImagesService) {}
 
-    @PermissionAccess(PERMISSION.IMAGE)
+    // @PermissionAccess(PERMISSION.IMAGE)
     @Post()
     public async create(@Body() createImageDto: CreateImageDto) {
         return this.imagesService.create(createImageDto);
     }
 
-    @PermissionAccess(PERMISSION.IMAGE, PERMISSION.IMAGE_SHOW)
+    // @PermissionAccess(PERMISSION.IMAGE)
+    @Post('upload')
+    @UseInterceptors(FileInterceptor('file', { storage: cloudinaryStorage }))
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                file: {
+                    type: 'string',
+                    format: 'binary',
+                    description: 'Archivo de imagen a subir',
+                },
+                propertyId: {
+                    type: 'string',
+                    format: 'uuid',
+                    description: 'ID de la propiedad asociada',
+                },
+            },
+        },
+    })
+    public async uploadImage(
+        @UploadedFile() file: Express.Multer.File,
+        @Body('propertyId') propertyId: string,
+    ) {
+        return this.imagesService.uploadImage(file, propertyId);
+    }
+
+    // @PermissionAccess(PERMISSION.IMAGE, PERMISSION.IMAGE_SHOW)
     @ApiQuery({ name: 'limit', type: 'number', required: false })
     @ApiQuery({ name: 'offset', type: 'number', required: false })
     @ApiQuery({ name: 'order', enum: ORDER_ENUM, required: false })
@@ -34,14 +64,14 @@ export class ImagesController {
         return this.imagesService.findAll();
     }
 
-    @PermissionAccess(PERMISSION.IMAGE, PERMISSION.IMAGE_SHOW)
+    // @PermissionAccess(PERMISSION.IMAGE, PERMISSION.IMAGE_SHOW)
     @ApiParam({ name: 'id', type: 'string' })
     @Get(':id')
     public async findOne(@Param('id', ParseUUIDPipe) id: string) {
         return this.imagesService.findOne(id);
     }
 
-    @PermissionAccess(PERMISSION.IMAGE)
+    // @PermissionAccess(PERMISSION.IMAGE)
     @ApiParam({ name: 'id', type: 'string' })
     @Patch(':id')
     public async update(
@@ -51,7 +81,7 @@ export class ImagesController {
         return this.imagesService.update(id, updateImageDto);
     }
 
-    @PermissionAccess(PERMISSION.IMAGE)
+    // @PermissionAccess(PERMISSION.IMAGE)
     @ApiParam({ name: 'id', type: 'string' })
     @Delete(':id')
     public async remove(@Param('id', ParseUUIDPipe) id: string) {
