@@ -16,9 +16,14 @@ export enum ContractStatus {
     FINALIZADO = 'Finalizado'
 }
 
+export enum ContractFormat {
+    PDF = 'pdf',
+    HTML = 'html'
+}
+
 @Entity({ name: 'contract' })
 export class ContractEntity extends BaseEntity {
-    @Column({ type: 'number', nullable: false })
+    @Column({ type: 'integer', nullable: false })
     contractNumber: number;
 
     @Column({
@@ -35,7 +40,7 @@ export class ContractEntity extends BaseEntity {
     })
     status: ContractStatus;
 
-    @Column({ type: 'number', nullable: false })
+    @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
     amount: number;
     
     @Column({ type: 'date', nullable: false })
@@ -44,10 +49,39 @@ export class ContractEntity extends BaseEntity {
     @Column({ type: 'date', nullable: false })
     endDate: Date;
     
-    @Column({ type: 'text', nullable: false })
-    url: string;
+    // Datos del cliente
+    @Column({ type: 'varchar', length: 255, nullable: false })
+    clientName: string;
     
+    @Column({ type: 'varchar', length: 50, nullable: false })
+    clientDocument: string;
+    
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    clientPhone: string;
+    
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    clientEmail: string;
+    
+    // Datos del agente
+    @Column({ type: 'varchar', length: 255, nullable: false })
+    agentName: string;
+    
+    @Column({ type: 'varchar', length: 50, nullable: false })
+    agentDocument: string;
+    
+    // Contenido del contrato
     @Column({ type: 'text', nullable: false })
+    contractContent: string; // Base64 del PDF o HTML del contrato
+    
+    @Column({
+        type: 'enum',
+        enum: ContractFormat,
+        default: ContractFormat.HTML,
+        nullable: false
+    })
+    contractFormat: ContractFormat;
+    
+    @Column({ type: 'text', nullable: true })
     notes: string;
 
     @OneToOne(() => PropertyEntity, { onDelete: 'CASCADE' })

@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
-import { ContractType, ContractStatus } from '@/property/entities/contract.entity';
-import { IsString, IsNumber, IsDate, IsNotEmpty, IsEnum } from 'class-validator';
+import { ContractType, ContractStatus, ContractFormat } from '@/property/entities/contract.entity';
+import { IsString, IsNumber, IsDate, IsNotEmpty, IsEnum, IsEmail, IsOptional } from 'class-validator';
 
 
 
@@ -31,11 +31,39 @@ export class CreateContractDto {
 
     @IsString()
     @IsNotEmpty()
-    url: string;
+    clientName: string;
 
     @IsString()
     @IsNotEmpty()
-    notes: string;
+    clientDocument: string;
+
+    @IsString()
+    @IsOptional()
+    clientPhone?: string;
+
+    @IsEmail()
+    @IsOptional()
+    clientEmail?: string;
+
+    @IsString()
+    @IsNotEmpty()
+    agentName: string;
+
+    @IsString()
+    @IsNotEmpty()
+    agentDocument: string;
+
+    @IsString()
+    @IsNotEmpty()
+    contractContent: string; // Base64 o HTML
+
+    @IsEnum(ContractFormat)
+    @IsNotEmpty()
+    contractFormat: ContractFormat;
+
+    @IsString()
+    @IsOptional()
+    notes?: string;
 
     @IsNumber()
     @IsNotEmpty()
