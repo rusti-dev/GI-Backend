@@ -68,4 +68,5 @@ export enum PERMISSION {
     // Backups
     BACKUP_CREATE = 'Crear backups',
     BACKUP_RESTORE = 'Restaurar backups',
+    BACKUP_VIEW = 'Ver backups',
 }

@@ -4,7 +4,7 @@ import { PermissionGuard } from 'src/users/guards/permission.guard';
 import { PERMISSION } from 'src/users/constants/permission.constant';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PermissionAccess } from 'src/users/decorators/permissions.decorator';
-import { Body, Controller,Post,UseGuards } from '@nestjs/common';
+import { Body, Controller,Get,Post,UseGuards } from '@nestjs/common';
 import { BackupService } from '../services/backup.service';
 import { RestoreBackupDto } from '../dto/restore-backup.dto';
 
@@ -16,7 +16,7 @@ export class BackupController {
 
     @UseGuards(AuthGuard, PermissionGuard)
     @ApiBearerAuth()
-    @PermissionAccess(PERMISSION.BACKUP_CREATE)
+    @PermissionAccess(PERMISSION.LOG)
     @Post()
     public async createManualBackup(): Promise<ResponseMessage> {
     await this.backupService.executeManualBackup();
@@ -28,9 +28,20 @@ export class BackupController {
 
   @UseGuards(AuthGuard, PermissionGuard)
     @ApiBearerAuth()
-    @PermissionAccess(PERMISSION.BACKUP_RESTORE)
+    @PermissionAccess(PERMISSION.LOG)
   @Post('restore')
 async restoreBackup(@Body() dto: RestoreBackupDto) {
   return this.backupService.restoreBackup(dto.fileName);
 }
+@UseGuards(AuthGuard, PermissionGuard)
+  @ApiBearerAuth()
+  @PermissionAccess(PERMISSION.LOG)
+  @Get()
+  public getAllBackups(): ResponseMessage {
+    const backups = this.backupService.getAllBackups();
+    return {
+      statusCode: 200,
+      data: backups,
+    };
+  }
 }

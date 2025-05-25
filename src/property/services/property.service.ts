@@ -61,6 +61,7 @@ export class PropertyService {
             const { limit, offset, order, attr, value } = queryDto;
 
             const query = this.propertyRepository.createQueryBuilder('property')
+                .leftJoinAndSelect('property.user', 'user')
                 .leftJoinAndSelect('property.sector', 'sector')
                 .leftJoinAndSelect('property.ubicacion', 'ubicacion')
                 .leftJoinAndSelect('property.category', 'category')

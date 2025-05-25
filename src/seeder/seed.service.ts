@@ -267,6 +267,12 @@ export class SeedService {
          type: PermissionType.USERS,
         });
 
+        const backupView= await this.permissionService.create({
+         name: PERMISSION.BACKUP_VIEW,
+         description: 'permite ver backups',
+         type: PermissionType.USERS,
+        });
+
 
 
         const permissionSU = [
@@ -279,6 +285,7 @@ export class SeedService {
             logShow.id,
             backupCreate.id,
             backupRestore.id,
+            backupView.id,
         ];
 
         const permissionUser = [
