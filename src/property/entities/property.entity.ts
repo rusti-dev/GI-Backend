@@ -11,8 +11,8 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne} from 'typeo
 
 
 export enum EstadoProperty {
-    DISPONIBLE = 'disponible',
     OCUPADO= 'ocupado',
+    DISPONIBLE = 'disponible',
 }
 
 @Entity({ name: 'property' })
@@ -39,7 +39,6 @@ export class PropertyEntity extends BaseEntity {
     NroEstacionamientos:number;
 
     // RELACIONES:
-     
     @ManyToOne( ()=>UserEntity, (user) => user.propertys,{onDelete: 'CASCADE', nullable: true})
     user: UserEntity;
   

@@ -14,13 +14,19 @@ import { UbicacionService } from './services/ubicacion.service';
 import { ImagesController } from './controllers/image.controller';
 import { PropertyController } from './controllers/property.controller';
 import { UbicacionController } from './controllers/ubicacion.controller';
-
-
+import { ContractController } from './controllers/contract.controller';
+import { ContractService } from './services/contract.service';
+import { ContractEntity } from './entities/contract.entity';
+import { PaymentMethodEntity } from '@/realstate/entities/payment_method.entity';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([
-            PropertyEntity, UbicacionEntity, ImagenEntity
+            PropertyEntity, 
+            UbicacionEntity, 
+            ImagenEntity, 
+            ContractEntity,
+            PaymentMethodEntity
         ]),
         UsersModule,
         SectorsModule,
@@ -28,14 +34,24 @@ import { UbicacionController } from './controllers/ubicacion.controller';
         ConfigModule
     ],
     controllers: [
-        PropertyController, UbicacionController, ImagesController
+        PropertyController, 
+        UbicacionController, 
+        ImagesController, 
+        ContractController
     ],
     providers: [
-        PropertyService, UbicacionService, CloudinaryProvider, ImagesService
+        PropertyService, 
+        UbicacionService, 
+        CloudinaryProvider, 
+        ImagesService, 
+        ContractService
     ],
     exports: [
-        PropertyService, UbicacionService,TypeOrmModule, ImagesService
+        PropertyService, 
+        UbicacionService,
+        TypeOrmModule, 
+        ImagesService, 
+        ContractService
     ],
 })
-
 export class PropertyModule {}
