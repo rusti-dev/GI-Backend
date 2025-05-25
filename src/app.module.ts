@@ -10,8 +10,8 @@ import { SectorsModule } from './sectors/sectors.module';
 import { PropertyModule } from './property/property.module';
 import { RealstateModule } from './realstate/realstate.module';
 import { ProvidersModule } from './providers/providers.module';
+import { ReportModule } from './reports/report.module';
 
-// import { RealstateModule } from './realstate/realstate.module';
 
 
 @Module({
@@ -25,6 +25,7 @@ import { ProvidersModule } from './providers/providers.module';
         SectorsModule,
         PropertyModule,
         StateModule,
+        ReportModule,
         SeederModule,
     ]
 })
