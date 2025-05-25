@@ -1,7 +1,7 @@
 import { ApiTags } from '@nestjs/swagger';
 import { ContractEntity } from '../entities/contract.entity';
 import { ContractService } from '../services/contract.service';
-import { CreateContractDto, UpdateContractDto } from '../dto/contract.dto';
+import { CreateContractDto, UpdateContractDto } from '@/property/dto';
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 
 

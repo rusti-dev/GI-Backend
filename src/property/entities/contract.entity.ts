@@ -5,16 +5,35 @@ import { PaymentMethodEntity } from "@/realstate/entities/payment_method.entity"
 
 
 
+export enum ContractType {
+    COMPRA = 'Compra',
+    VENTA = 'Venta',
+    ANTICRETICO = 'Anticrético'
+}
+
+export enum ContractStatus {
+    VIGENTE = 'Vigente',
+    FINALIZADO = 'Finalizado'
+}
+
 @Entity({ name: 'contract' })
 export class ContractEntity extends BaseEntity {
     @Column({ type: 'number', nullable: false })
     contractNumber: number;
 
-    @Column({ type: 'text', nullable: false })
-    type: string;
+    @Column({
+        type: 'enum',
+        enum: ContractType,
+        nullable: false
+    })
+    type: ContractType;
 
-    @Column({ type: 'text', nullable: false })
-    status: string;
+    @Column({
+        type: 'enum',
+        enum: ContractStatus,
+        nullable: false
+    })
+    status: ContractStatus;
 
     @Column({ type: 'number', nullable: false })
     amount: number;

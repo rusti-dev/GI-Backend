@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ContractEntity } from '../entities/contract.entity';
 import { PropertyEntity } from '../entities/property.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateContractDto, UpdateContractDto } from '../dto/contract.dto';
+import { CreateContractDto, UpdateContractDto } from '@/property/dto';
 import { PaymentMethodEntity } from '@/realstate/entities/payment_method.entity';
 
 
