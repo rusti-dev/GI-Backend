@@ -7,6 +7,7 @@ import { SectorEntity } from '@/sectors/entities/sector.entity';
 import { CategoryEntity} from '@/state/entities/category.entity';
 import { ModalityEntity } from '@/state/entities/modality.entity'; 
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne} from 'typeorm';
+import { ContractEntity } from './contract.entity';
 
 
 
@@ -60,4 +61,7 @@ export class PropertyEntity extends BaseEntity {
     
     @OneToMany(()=>PropertyOwnerEntity,(property_owner)=> property_owner.property,{onDelete: 'CASCADE'})
     property_owner: PropertyOwnerEntity[];
+
+    @OneToMany(() => ContractEntity, (contract) => contract.property)
+    contracts: ContractEntity[];
 }

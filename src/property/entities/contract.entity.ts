@@ -1,19 +1,19 @@
 import { PropertyEntity } from "./property.entity";
 import { BaseEntity } from "@/common/entities/base.entity";
-import { Column, Entity, OneToOne, JoinColumn } from "typeorm";
+import { Column, Entity, ManyToOne, JoinColumn } from "typeorm";
 import { PaymentMethodEntity } from "@/realstate/entities/payment_method.entity";
 
 
 
 export enum ContractType {
-    COMPRA = 'Compra',
+    COMPRA = 'COMPRA',
     VENTA = 'VENTA',
-    ANTICRETICO = 'Anticrético'
+    ANTICRETICO = 'ANTICRETICO'
 }
 
 export enum ContractStatus {
     VIGENTE = 'VIGENTE',
-    FINALIZADO = 'Finalizado'
+    FINALIZADO = 'FINALIZADO',
 }
 
 export enum ContractFormat {
@@ -84,11 +84,11 @@ export class ContractEntity extends BaseEntity {
     @Column({ type: 'varchar', length: 255, nullable: true })
     notes: string;
 
-    @OneToOne(() => PropertyEntity, { onDelete: 'CASCADE' })
+    @ManyToOne(() => PropertyEntity, { onDelete: 'CASCADE' })
     @JoinColumn()
     property: PropertyEntity;
 
-    @OneToOne(() => PaymentMethodEntity, { onDelete: 'CASCADE' })
+    @ManyToOne(() => PaymentMethodEntity, { onDelete: 'CASCADE' })
     @JoinColumn()
     payment_method: PaymentMethodEntity;
 }

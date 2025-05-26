@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from 'src/common/entities/base.entity';
+import { ContractEntity } from '@/property/entities/contract.entity';
 import { SubscriptionPaymentEntity } from './subscription_payment.entity';
 
 
@@ -18,4 +19,7 @@ export class PaymentMethodEntity extends BaseEntity {
   
     @OneToMany(() => SubscriptionPaymentEntity, (subscriptionPay) => subscriptionPay.payment_method, { onDelete: 'CASCADE', nullable: true })
     subscription_payments: SubscriptionPaymentEntity[];
+
+    @OneToMany(() => ContractEntity, (contract) => contract.payment_method)
+    contracts: ContractEntity[];
 }

@@ -29,8 +29,8 @@ export class PropertyController {
         };
     }
   
-    @UseGuards(UniversalAuthGuard)
-    @ApiBearerAuth()
+    // @UseGuards(UniversalAuthGuard)
+    // @ApiBearerAuth()
     //@PermissionAccess(PERMISSION.SECTOR, PERMISSION.PROPERTY_SHOW)
     @ApiQuery({ name: 'limit', type: 'number', required: false })
     @ApiQuery({ name: 'offset', type: 'number', required: false })
