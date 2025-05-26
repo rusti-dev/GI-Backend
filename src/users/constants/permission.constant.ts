@@ -64,4 +64,11 @@ export enum PERMISSION {
     // Image
     IMAGE = 'Imagen',
     IMAGE_SHOW = 'Mostrar imagenes',
+
+    // Contract
+    CONTRACT = 'Contrato',
+    CONTRACT_SHOW = 'Mostrar contratos',
+    CONTRACT_CREATE = 'Crear contratos',
+    CONTRACT_UPDATE = 'Actualizar contratos',
+    CONTRACT_DELETE = 'Eliminar contratos'
 }

@@ -11,12 +11,13 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 
 
 @ApiTags('Contracts')
-@UseGuards(AuthGuard, PermissionGuard)
-@ApiBearerAuth()
+// @UseGuards(AuthGuard, PermissionGuard)
+// @ApiBearerAuth()
 @Controller('contracts')
 export class ContractController {
     constructor(private readonly contractService: ContractService) {}
 
+    // @PermissionAccess(PERMISSION.CONTRACT)
     @Post()
     create(@Body() createContractDto: CreateContractDto): Promise<ContractEntity> {
         console.log("BIENVENIDO AL POST");

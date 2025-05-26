@@ -71,7 +71,7 @@ export class CreateContractDto {
     })
     @IsNotEmpty()
     @IsUUID()
-    propertyId: number;
+    propertyId: string;
 
     @ApiProperty({
         description: 'ID del método de pago utilizado',
@@ -79,7 +79,7 @@ export class CreateContractDto {
     })
     @IsNotEmpty()
     @IsUUID()
-    paymentMethodId: number;
+    paymentMethodId: string;
 }
 
 export class UpdateContractDto extends PartialType(CreateContractDto) {}
