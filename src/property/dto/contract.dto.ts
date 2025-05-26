@@ -55,7 +55,7 @@ export class CreateContractDto {
 
     @IsString()
     @IsNotEmpty()
-    contractContent: string; // Base64 o HTML
+    contractContent: string; // Base64 o HTML, contenido del contrato
 
     @IsEnum(ContractFormat)
     @IsNotEmpty()
