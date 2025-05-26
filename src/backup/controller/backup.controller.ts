@@ -21,7 +21,7 @@ export class BackupController {
     public async createManualBackup(): Promise<ResponseMessage> {
     await this.backupService.executeManualBackup();
     return {
-      statusCode: 200,
+      statusCode: 201,
       data: 'Backup ejecutado correctamente.',
     };
   }
@@ -31,9 +31,13 @@ export class BackupController {
     @PermissionAccess(PERMISSION.LOG)
   @Post('restore')
 async restoreBackup(@Body() dto: RestoreBackupDto) {
-  return this.backupService.restoreBackup(dto.fileName);
+  await this.backupService.restoreBackup(dto.fileName);
+   return {
+    statusCode: 201,
+    data:`Backup ${dto.fileName} restaurado correctamente.`
+  };
 }
-@UseGuards(AuthGuard, PermissionGuard)
+  @UseGuards(AuthGuard, PermissionGuard)
   @ApiBearerAuth()
   @PermissionAccess(PERMISSION.LOG)
   @Get()

@@ -111,21 +111,26 @@ export class BackupService {
     throw new InternalServerErrorException('Fallo al restaurar el backup.');
   }
 }
-public getAllBackups(): string[] {
-    try {
-      const backupDir = path.resolve(process.env.BACKUP_DIR || './backups');
+public getAllBackups(): { fileName: string }[] {
+  try {
+    const backupDir = path.resolve(process.env.BACKUP_DIR || './backups');
 
-      if (!fs.existsSync(backupDir)) {
-        return [];
-      }
-
-      return fs
-        .readdirSync(backupDir)
-        .filter(file => file.endsWith('.sql'))
-        .sort((a, b) => fs.statSync(path.join(backupDir, b)).mtime.getTime() - fs.statSync(path.join(backupDir, a)).mtime.getTime());
-    } catch (error) {
-      this.logger.error('Fallo al obtener la lista de backups', error);
-      throw new InternalServerErrorException('No se pudo obtener la lista de backups.');
+    if (!fs.existsSync(backupDir)) {
+      return [];
     }
+
+    return fs
+      .readdirSync(backupDir)
+      .filter(file => file.endsWith('.sql'))
+      .sort(
+        (a, b) =>
+          fs.statSync(path.join(backupDir, b)).mtime.getTime() -
+          fs.statSync(path.join(backupDir, a)).mtime.getTime()
+      )
+      .map(file => ({ fileName: file })); // <-- Aquí adaptamos el formato
+  } catch (error) {
+    this.logger.error('Fallo al obtener la lista de backups', error);
+    throw new InternalServerErrorException('No se pudo obtener la lista de backups.');
   }
+}
 }
