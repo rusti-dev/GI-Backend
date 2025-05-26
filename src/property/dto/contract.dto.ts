@@ -1,6 +1,6 @@
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { ContractType, ContractStatus, ContractFormat } from '@/property/entities/contract.entity';
-import { IsString, IsNumber, IsDate, IsNotEmpty, IsEnum, IsEmail, IsOptional } from 'class-validator';
+import { IsString, IsNumber, IsDate, IsNotEmpty, IsEnum, IsEmail, IsOptional, IsUUID } from 'class-validator';
 
 
 
@@ -65,12 +65,20 @@ export class CreateContractDto {
     @IsOptional()
     notes?: string;
 
-    @IsNumber()
+    @ApiProperty({
+        description: 'ID de la propiedad asociada',
+        example: '123e4567-e89b-12d3-a456-426614174000',
+    })
     @IsNotEmpty()
+    @IsUUID()
     propertyId: number;
 
-    @IsNumber()
+    @ApiProperty({
+        description: 'ID del método de pago utilizado',
+        example: '123e4567-e89b-12d3-a456-426614174000',
+    })
     @IsNotEmpty()
+    @IsUUID()
     paymentMethodId: number;
 }
 

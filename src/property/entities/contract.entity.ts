@@ -7,12 +7,12 @@ import { PaymentMethodEntity } from "@/realstate/entities/payment_method.entity"
 
 export enum ContractType {
     COMPRA = 'Compra',
-    VENTA = 'Venta',
+    VENTA = 'VENTA',
     ANTICRETICO = 'Anticrético'
 }
 
 export enum ContractStatus {
-    VIGENTE = 'Vigente',
+    VIGENTE = 'VIGENTE',
     FINALIZADO = 'Finalizado'
 }
 
@@ -50,7 +50,7 @@ export class ContractEntity extends BaseEntity {
     endDate: Date;
     
     // Datos del cliente
-    @Column({ type: 'varchar', length: 255, nullable: false })
+    @Column({ type: 'varchar', length: 100, nullable: false })
     clientName: string;
     
     @Column({ type: 'varchar', length: 50, nullable: false })
@@ -63,7 +63,7 @@ export class ContractEntity extends BaseEntity {
     clientEmail: string;
     
     // Datos del agente
-    @Column({ type: 'varchar', length: 255, nullable: false })
+    @Column({ type: 'varchar', length: 100, nullable: false })
     agentName: string;
     
     @Column({ type: 'varchar', length: 50, nullable: false })
@@ -81,7 +81,7 @@ export class ContractEntity extends BaseEntity {
     })
     contractFormat: ContractFormat;
     
-    @Column({ type: 'text', nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     notes: string;
 
     @OneToOne(() => PropertyEntity, { onDelete: 'CASCADE' })

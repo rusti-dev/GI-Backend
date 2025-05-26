@@ -7,17 +7,18 @@ import { ImagenEntity } from './entities/imagen.entity';
 import { SectorsModule } from '@/sectors/sectors.module'; 
 import { ImagesService } from './services/image.service';
 import { PropertyEntity } from './entities/property.entity';
+import { ContractEntity } from './entities/contract.entity';
 import { PropertyService } from './services/property.service';
 import { UbicacionEntity } from './entities/ubicacion.entity';
+import { ContractService } from './services/contract.service';
 import { CloudinaryProvider } from '@/config/cloudinary.config';
 import { UbicacionService } from './services/ubicacion.service';
 import { ImagesController } from './controllers/image.controller';
 import { PropertyController } from './controllers/property.controller';
-import { UbicacionController } from './controllers/ubicacion.controller';
 import { ContractController } from './controllers/contract.controller';
-import { ContractService } from './services/contract.service';
-import { ContractEntity } from './entities/contract.entity';
+import { UbicacionController } from './controllers/ubicacion.controller';
 import { PaymentMethodEntity } from '@/realstate/entities/payment_method.entity';
+
 
 @Module({
     imports: [
