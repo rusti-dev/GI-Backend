@@ -13,6 +13,9 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne} from 'typeo
 export enum EstadoProperty {
     DISPONIBLE = 'disponible',
     OCUPADO= 'ocupado',
+    ALQUILADO='alquilado',
+    VENDIDO='vendido',
+    RESERVADO='reservado'
 }
 
 @Entity({ name: 'property' })

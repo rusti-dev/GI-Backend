@@ -59,6 +59,17 @@ export class PropertyController {
         };
     }
 
+    @UseGuards(UniversalAuthGuard)
+    @ApiBearerAuth()
+    @ApiParam({ name: 'propertyId', type: 'string' })
+    @Get(':propertyId/agent')
+    public async getPropertyAgent(@Param('propertyId', ParseUUIDPipe) propertyId: string): Promise<ResponseMessage> {
+        return {
+            statusCode: 200,
+            data: await this.propertyService.getPropertyAgent(propertyId),
+        };
+    }
+
     @UseGuards(AuthGuard, PermissionGuard)
     @ApiBearerAuth()
     //@PermissionAccess(PERMISSION.PROPERTY)
