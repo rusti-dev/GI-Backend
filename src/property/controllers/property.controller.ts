@@ -47,9 +47,9 @@ export class PropertyController {
         };
     }
 
-    @UseGuards(AuthGuard, PermissionGuard)
-    @ApiBearerAuth()
-    @PermissionAccess(PERMISSION.SECTOR, PERMISSION.PROPERTY_SHOW)
+    // @UseGuards(AuthGuard, PermissionGuard)
+    // @ApiBearerAuth()
+    // @PermissionAccess(PERMISSION.SECTOR, PERMISSION.PROPERTY_SHOW)
     @ApiParam({ name: 'propertyId', type: 'string' })
     @Get(':propertyId')
     public async findOne(@Param('propertyId', ParseUUIDPipe) propertyId: string): Promise<ResponseMessage> {

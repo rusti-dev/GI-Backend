@@ -25,8 +25,8 @@ export class ContractController {
         return this.contractService.create(createContractDto);
     }
 
-    @UseGuards(AuthGuard, PermissionGuard)
-    @ApiBearerAuth()
+    // @UseGuards(AuthGuard, PermissionGuard)
+    // @ApiBearerAuth()
     @Get()
     findAll(): Promise<ContractEntity[]> {
         return this.contractService.findAll();
