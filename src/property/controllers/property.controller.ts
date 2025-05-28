@@ -61,7 +61,7 @@ export class PropertyController {
 
     @UseGuards(AuthGuard, PermissionGuard)
     @ApiBearerAuth()
-    @PermissionAccess(PERMISSION.PROPERTY)
+    @PermissionAccess(PERMISSION.SECTOR)
     @ApiParam({ name: 'propertyId', type: 'string' })
     @Patch(':propertyId')
     public async update(@Param('propertyId', ParseUUIDPipe) propertyId: string, @Body() updatePropertyDto: UpdatePropertyDto): Promise<ResponseMessage> {
@@ -73,7 +73,7 @@ export class PropertyController {
 
     @UseGuards(AuthGuard, PermissionGuard)
     @ApiBearerAuth()
-    @PermissionAccess(PERMISSION.PROPERTY)
+    @PermissionAccess(PERMISSION.SECTOR)
     @ApiParam({ name: 'propertyId', type: 'string' })
     @Delete(':propertyId')
     public async delete(@Param('propertyId', ParseUUIDPipe) propertyId: string): Promise<ResponseMessage> {
