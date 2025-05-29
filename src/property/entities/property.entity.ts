@@ -16,6 +16,8 @@ export enum EstadoProperty {
     VENDIDO = 'vendido',
     ALQUILADO = 'alquilado',
     ANTICRETADO= 'anticretado',
+    OCUPADO= 'ocupado',
+
 }
 
 @Entity({ name: 'property' })

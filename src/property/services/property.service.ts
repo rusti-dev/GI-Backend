@@ -66,7 +66,8 @@ export class PropertyService {
                 .leftJoinAndSelect('property.ubicacion', 'ubicacion')
                 .leftJoinAndSelect('property.category', 'category')
                 .leftJoinAndSelect('property.modality', 'modality')
-                .leftJoinAndSelect('sector.realState', 'realState');
+                .leftJoinAndSelect('sector.realState', 'realState')
+                .leftJoinAndSelect('property.imagenes', 'imagenes');
 
             if (limit) query.take(limit);
             if (offset) query.skip(offset);
@@ -162,6 +163,27 @@ export class PropertyService {
                 statusCode: 200,
                 message: 'Property deleted successfully'
             }
+        } catch (error) {
+            handlerError(error, this.logger);
+        }
+    }
+
+    public async getPropertyAgent(id: string): Promise<any> {
+        try {
+            const property = await this.propertyRepository.findOne({
+                where: { id },
+                relations: ['user'],
+            });
+
+            if (!property) {
+                throw new Error('Property not found');
+            }
+
+            if (!property.user) {
+                throw new Error('Property has no agent assigned');
+            }
+
+            return property.user;
         } catch (error) {
             handlerError(error, this.logger);
         }
