@@ -166,4 +166,25 @@ export class PropertyService {
             handlerError(error, this.logger);
         }
     }
+
+    public async getPropertyAgent(id: string): Promise<any> {
+        try {
+            const property = await this.propertyRepository.findOne({
+                where: { id },
+                relations: ['user'],
+            });
+
+            if (!property) {
+                throw new Error('Property not found');
+            }
+
+            if (!property.user) {
+                throw new Error('Property has no agent assigned');
+            }
+
+            return property.user;
+        } catch (error) {
+            handlerError(error, this.logger);
+        }
+    }
 }
