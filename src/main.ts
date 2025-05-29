@@ -1,5 +1,6 @@
 import * as morgan from 'morgan';
 import { AppModule } from './app.module';
+import * as bodyParser from 'body-parser';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder } from '@nestjs/swagger';
@@ -17,6 +18,8 @@ async function bootstrap() {
 
     app.use(morgan('dev'));
     app.setGlobalPrefix('api');
+    app.use(bodyParser.json({ limit: '50mb' }));
+    app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
     app.enableCors(CORS_OPTIONS);
     app.useGlobalPipes(
         new ValidationPipe({
