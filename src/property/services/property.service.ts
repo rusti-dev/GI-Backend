@@ -68,7 +68,6 @@ export class PropertyService {
                 .leftJoinAndSelect('property.modality', 'modality')
                 .leftJoinAndSelect('sector.realState', 'realState')
                 .leftJoinAndSelect('property.imagenes', 'imagenes');
-
             if (limit) query.take(limit);
             if (offset) query.skip(offset);
             if (order) query.orderBy('property.id', order.toUpperCase() as any);
@@ -95,7 +94,8 @@ export class PropertyService {
                     'sector',
                     'imagenes',
                     'ubicacion',
-                    'property_owner'], // esto se cambio, antes estaba 'property_owner' y daba error
+                    'property_owner',
+  'property_owner.owner'], // esto se cambio, antes estaba 'property_owner' y daba error
             });
 
             if (!property) {
@@ -108,40 +108,52 @@ export class PropertyService {
     }
 
     public async update(id: string, updatePropertyDto: UpdatePropertyDto): Promise<ResponseMessage> {
-        try {
-            const property = await this.propertyRepository.findOne({ where: { id }, relations: ['ubicacion'], });
-            if (!property) {
-                throw new Error('Property not found');
-            }
-            const { user, sector, category, modality, ubicacion, ...propertyData } = updatePropertyDto;
-            const userFound = await this.userService.findOne(user);
-            const sectorFound = await this.sectorService.findOne(sector);
-            const categoryFound = await this.categoryService.findOne(category);
-            const modalityFound = await this.modalityService.findOne(modality);
+  try {
+    const property = await this.propertyRepository.findOne({
+      where: { id },
+      relations: ['ubicacion'],
+    });
+    if (!property) throw new Error('Property not found');
 
-            let updateUbicacion = property.ubicacion;
-            if (ubicacion) {
-                updateUbicacion = (await this.ubicacionService.update(property.ubicacion.id, ubicacion)).data;
-            }
+    // Separo relaciones de los demás campos
+    const { user, sector, category, modality, ubicacion, ...propertyData } = updatePropertyDto;
 
-            let updatedProperty: Partial<PropertyEntity> = {
-                ...property,
-                user: userFound,
-                sector: sectorFound,
-                category: categoryFound,
-                modality: modalityFound,
-                ubicacion: updateUbicacion,
-            };
+    // Cargo las nuevas relaciones (si vienen)
+    const [userFound, sectorFound, categoryFound, modalityFound] = await Promise.all([
+      this.userService.findOne(user),
+      this.sectorService.findOne(sector),
+      this.categoryService.findOne(category),
+      this.modalityService.findOne(modality),
+    ]);
 
-            await this.propertyRepository.update(id, updatedProperty);
-            return {
-                statusCode: 200,
-                data: await this.propertyRepository.findOne({ where: { id } }),
-            }
-        } catch (error) {
-            handlerError(error, this.logger);
-        }
+    // Manejo de ubicación
+    let updateUbicacion = property.ubicacion;
+    if (ubicacion) {
+      updateUbicacion = (await this.ubicacionService.update(property.ubicacion.id, ubicacion)).data;
     }
+
+    // Combino los datos NUEVOS con los existentes
+    const merged = this.propertyRepository.merge(property, {
+      ...propertyData,          // ← aquí viaja tu nuevo atributo
+      user: userFound,          // usa solo IDs si tu columna es userId
+      sector: sectorFound,
+      category: categoryFound,
+      modality: modalityFound,
+      ubicacion: updateUbicacion,
+    });
+
+    // ‼️  Usa save, no update, para que sí persista relaciones y dispare hooks
+    const saved = await this.propertyRepository.save(merged);
+
+    return {
+      statusCode: 200,
+      data: saved,
+    };
+  } catch (error) {
+    handlerError(error, this.logger);
+  }
+}
+
 
     public async delete(id: string): Promise<ResponseMessage> {
         try {

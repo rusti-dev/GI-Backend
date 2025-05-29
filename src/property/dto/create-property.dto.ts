@@ -74,7 +74,9 @@ export class CreatePropertyDto {
     @IsNotEmpty()
     NroEstacionamientos: number;
 
-      @ApiProperty({
+
+    @ApiProperty({
+
         type: 'number',
         description: 'comision por el inmueble',
         example: 0.15,
