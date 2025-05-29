@@ -63,7 +63,9 @@ export class PropertyService {
               .leftJoinAndSelect('property.sector', 'sector')
               .leftJoinAndSelect('property.user', 'user')
               .leftJoinAndSelect('property.category', 'category')
-              .leftJoinAndSelect('property.modality', 'modality') 
+              .leftJoinAndSelect('property.modality', 'modality')
+              .leftJoinAndSelect('sector.realState', 'realState')
+              .leftJoinAndSelect('property.imagenes', 'imagenes'); 
           
             if (limit) query.take(limit);
             if (offset) query.skip(offset);
