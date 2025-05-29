@@ -15,6 +15,7 @@ export enum EstadoProperty {
     ALQUILADO = 'alquilado',
     ANTICRETADO= 'anticretado',
     OCUPADO= 'ocupado',
+
 }
 
 @Entity({ name: 'property' })
@@ -38,14 +39,15 @@ export class PropertyEntity extends BaseEntity {
     NroBanos:number;
     
     @Column({ type: 'int',nullable: false})
-    NroEstacionamientos:number;
-    
-    @Column({ type: 'decimal', nullable: false, default: '0.0' })
+    NroEstacionamientos:number;    
+
+     @Column({ type: 'decimal', nullable: false, default: '0.0' })
     comision:number;
 
     @Column({ type: 'text', nullable: false,  default: 'Sin condiciones especiales.'  })
-    condicion_Compra: string;  
-    
+    condicion_Compra: string;
+
+
     // RELACIONES:
      
     @ManyToOne( ()=>UserEntity, (user) => user.propertys,{onDelete: 'CASCADE', nullable: true})

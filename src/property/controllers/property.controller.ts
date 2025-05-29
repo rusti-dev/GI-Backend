@@ -31,7 +31,8 @@ export class PropertyController {
   
     @UseGuards(UniversalAuthGuard)
     @ApiBearerAuth()
-    @PermissionAccess(PERMISSION.SECTOR, PERMISSION.PROPERTY_SHOW)
+    @PermissionAccess(PERMISSION.SECTOR, PERMISSION.SECTOR_SHOW)
+//     @PermissionAccess(PERMISSION.SECTOR, PERMISSION.PROPERTY_SHOW)
     @ApiQuery({ name: 'limit', type: 'number', required: false })
     @ApiQuery({ name: 'offset', type: 'number', required: false })
     @ApiQuery({ name: 'order', enum: ORDER_ENUM, required: false })
@@ -49,7 +50,7 @@ export class PropertyController {
 
     @UseGuards(AuthGuard, PermissionGuard)
     @ApiBearerAuth()
-    @PermissionAccess(PERMISSION.SECTOR, PERMISSION.PROPERTY_SHOW)
+    @PermissionAccess(PERMISSION.SECTOR, PERMISSION.SECTOR_SHOW)
     @ApiParam({ name: 'propertyId', type: 'string' })
     @Get(':propertyId')
     public async findOne(@Param('propertyId', ParseUUIDPipe) propertyId: string): Promise<ResponseMessage> {
