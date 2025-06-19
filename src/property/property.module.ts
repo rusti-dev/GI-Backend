@@ -8,16 +8,19 @@ import { SectorsModule } from '@/sectors/sectors.module';
 import { ImagesService } from './services/image.service';
 import { PropertyEntity } from './entities/property.entity';
 import { ContractEntity } from './entities/contract.entity';
+import { PaymentEntity } from './entities/payment.entity';
 import { PropertyService } from './services/property.service';
 import { UbicacionEntity } from './entities/ubicacion.entity';
 import { ContractService } from './services/contract.service';
 import { CloudinaryProvider } from '@/config/cloudinary.config';
 import { UbicacionService } from './services/ubicacion.service';
 import { ImagesController } from './controllers/image.controller';
+import { PaymentController } from './controllers/payment.controller';
 import { PropertyController } from './controllers/property.controller';
 import { ContractController } from './controllers/contract.controller';
 import { UbicacionController } from './controllers/ubicacion.controller';
 import { PaymentMethodEntity } from '@/realstate/entities/payment_method.entity';
+import { PaymentStripeService } from '@/realstate/services/payment-stripe.service';
 
 
 @Module({
@@ -27,6 +30,7 @@ import { PaymentMethodEntity } from '@/realstate/entities/payment_method.entity'
             UbicacionEntity, 
             ImagenEntity, 
             ContractEntity,
+            PaymentEntity,
             PaymentMethodEntity
         ]),
         UsersModule,
@@ -38,14 +42,16 @@ import { PaymentMethodEntity } from '@/realstate/entities/payment_method.entity'
         PropertyController, 
         UbicacionController, 
         ImagesController, 
-        ContractController
+        ContractController,
+        PaymentController
     ],
     providers: [
         PropertyService, 
         UbicacionService, 
         CloudinaryProvider, 
         ImagesService, 
-        ContractService
+        ContractService,
+        PaymentStripeService
     ],
     exports: [
         PropertyService, 
