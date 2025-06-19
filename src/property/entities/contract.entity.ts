@@ -8,7 +8,8 @@ import { PaymentMethodEntity } from "@/realstate/entities/payment_method.entity"
 export enum ContractType {
     COMPRA = 'COMPRA',
     VENTA = 'VENTA',
-    ANTICRETICO = 'ANTICRETICO'
+    ANTICRETICO = 'ANTICRETICO',
+    ALQUILER = 'ALQUILER'
 }
 
 export enum ContractStatus {
