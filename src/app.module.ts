@@ -12,7 +12,7 @@ import { RealstateModule } from './realstate/realstate.module';
 import { ProvidersModule } from './providers/providers.module';
 import { ReportModule } from './reports/report.module';
 import { BackupModule } from './backup/backup.module';
-
+import { StripeModule } from './stripe/stripe.module';
 
 @Module({
     imports: [
@@ -28,6 +28,7 @@ import { BackupModule } from './backup/backup.module';
         ReportModule,
         SeederModule,
         BackupModule,
+        StripeModule
     ]
 })
 
