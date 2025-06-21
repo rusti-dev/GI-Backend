@@ -10,7 +10,7 @@ import { LogsService } from './common/logs/logs.service';
 import { UserService } from './users/services/users.service';
 import { LoggingInterceptor } from './common/logs/logs.interceptor';
 import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
-
+import * as express from 'express';
 
 
 async function bootstrap() {
@@ -18,6 +18,7 @@ async function bootstrap() {
 
     app.use(morgan('dev'));
     app.setGlobalPrefix('api');
+    app.use('/webhook/stripe', express.raw({ type: 'application/json' }));
     app.use(bodyParser.json({ limit: '50mb' }));
     app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
     app.enableCors(CORS_OPTIONS);
@@ -32,7 +33,7 @@ async function bootstrap() {
     const reflector = app.get('Reflector');
     const logsService = app.get(LogsService);
     const userService = app.get(UserService);
-  
+
     app.useGlobalInterceptors(
         new ClassSerializerInterceptor(reflector),
         new LoggingInterceptor(logsService, userService)

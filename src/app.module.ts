@@ -15,6 +15,7 @@ import { ReportModule } from './reports/report.module';
 import { BackupModule } from './backup/backup.module';
 import { ImpulsarPropertyModule } from './impulsar_property/impulsar_property.module';
 
+import { StripeModule } from './stripe/stripe.module';
 
 @Module({
     imports: [
@@ -32,6 +33,7 @@ import { ImpulsarPropertyModule } from './impulsar_property/impulsar_property.mo
         SeederModule,
         BackupModule,
         ImpulsarPropertyModule,
+        StripeModule
     ]
 })
 
