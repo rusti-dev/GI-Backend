@@ -12,6 +12,8 @@ import { LoggingInterceptor } from './common/logs/logs.interceptor';
 import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
 import * as express from 'express';
 
+import * as crypto from 'crypto';
+(global as any).crypto = crypto;
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
