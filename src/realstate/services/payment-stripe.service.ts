@@ -23,7 +23,7 @@ export class PaymentStripeService {
   private stripe: Stripe;
 
   constructor() {
-    this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_...', {
+    this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_51RbkFwFjQ2yFgLKJTPVzKsW7XPnkFQpmlW8woQ9Wb5O3170c6eN7krJv653LVgmcxFbEMxH1RKtfozimqZFO54wY00EDHOUT59', {
       apiVersion: '2025-05-28.basil'
     });
   }
