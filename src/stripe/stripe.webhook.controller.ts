@@ -6,7 +6,7 @@ import { PaymentMethodService } from '@/realstate/services/payment_method.servic
 import { ContractFormat, ContractStatus, ContractType } from '@/property/entities/contract.entity';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-05-28.basil',
+
 });
 
 @Controller('webhook')
