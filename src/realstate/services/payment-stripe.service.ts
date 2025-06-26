@@ -39,11 +39,7 @@ export class PaymentStripeService {
         timeout: 30000, // 30 segundos
         maxNetworkRetries: 3,
         telemetry: false,
-        typescript: true,
-        httpAgent: undefined, // Usar agente HTTP por defecto
-        protocol: 'https',
-        host: 'api.stripe.com',
-        port: 443
+        typescript: true
       });
       
       this.logger.log('Servicio de Stripe inicializado correctamente');
