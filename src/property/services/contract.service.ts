@@ -92,7 +92,7 @@ export class ContractService {
             );
 
             // Crear registro de pago
-            const payment = this.paymentRepository.create({
+            const payment = this.paymentRepository.create({ //
                 stripePaymentIntentId: result.paymentIntentId,
                 amount: amount,
                 currency: 'USD',

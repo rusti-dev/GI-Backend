@@ -24,7 +24,7 @@ export class PaymentStripeService {
 
   constructor() {
     this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_51RbkFwFjQ2yFgLKJTPVzKsW7XPnkFQpmlW8woQ9Wb5O3170c6eN7krJv653LVgmcxFbEMxH1RKtfozimqZFO54wY00EDHOUT59', {
-      apiVersion: '2025-05-28.basil'
+
     });
   }
 
@@ -58,7 +58,7 @@ export class PaymentStripeService {
         payment_method_types: paymentMethodTypes,
         metadata: {
           contractNumber: request.contractNumber,
-          paymentMethod: request.paymentMethod,
+          paymentMethod: request.paymentMethod, // no esta cargando
           clientEmail: request.clientEmail || '',
           clientName: request.clientName || ''
         },
